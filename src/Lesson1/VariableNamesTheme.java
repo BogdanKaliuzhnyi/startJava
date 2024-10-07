@@ -173,8 +173,8 @@ public class VariableNamesTheme {
         System.out.println("Сокращенный uniform resource locator: " + shortUrl);
 
         // Новый идентификатор клиента
-        int ncid = 424;
-        System.out.println("Новый идентификатор клиента: " + ncid);
+        int newCid = 424;
+        System.out.println("Новый идентификатор клиента: " + newCid);
 
         // American standard code for information interchange
         int asciiCode = 51;
