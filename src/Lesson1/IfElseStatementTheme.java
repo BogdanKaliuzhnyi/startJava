@@ -163,8 +163,8 @@ public class IfElseStatementTheme {
         var monthlySales = new BigDecimal("16025.233");
         var monthlyRent = new BigDecimal("5123.018");
         var monthlyCost = new BigDecimal("9001.729");
-        var annualProfit1 = (monthlySales.subtract(monthlyRent.add(monthlyCost))).multiply(new BigDecimal("12"))
-                .setScale(2, RoundingMode.HALF_UP);
+        var monthlyProfit = monthlySales.subtract(monthlyRent).subtract(monthlyCost);
+        var annualProfit1 = monthlyProfit.multiply(new BigDecimal("12")).setScale(2, RoundingMode.HALF_UP);
         System.out.print("Прибыль за год: ");
         if (annualProfit1.compareTo(BigDecimal.ZERO) > 0) {
             System.out.print("+");

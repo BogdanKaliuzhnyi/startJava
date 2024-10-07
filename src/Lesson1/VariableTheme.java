@@ -30,7 +30,7 @@ public class VariableTheme {
         float totalPrice = penPrice + bookPrice;
         System.out.printf("Стоимость товара без скидки: %.2f\n", totalPrice);
         System.out.printf("Сумма скидки: %.2f\n", totalPrice * discount);
-        System.out.printf("Стоимость товара со скидкой: %.2f\n",totalPrice * (1 - discount));
+        System.out.printf("Стоимость товара со скидкой: %.2f\n", totalPrice * (1 - discount));
 
         System.out.println("\n3. Вывод слова JAVA:");
         System.out.println("    J    a  v     v  a    ");
@@ -100,7 +100,7 @@ public class VariableTheme {
         System.out.println("  " + slash + underscore + openParen + " " + closedParen + backSlash);
         System.out.println(" " + slash + "      " + backSlash);
         System.out.println("" + slash + underscore + underscore + underscore + underscore +
-                 slash + backSlash + underscore + underscore + backSlash);
+                slash + backSlash + underscore + underscore + backSlash);
 
         System.out.println("\n8. Манипуляции с сотнями, десятками и единицами числа:");
         int number = 123;
