@@ -1,4 +1,4 @@
-package lesson1;
+package lesson_1;
 
 public class VariableNamesTheme {
     public static void main(String[] args) {
