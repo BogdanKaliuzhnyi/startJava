@@ -67,14 +67,14 @@ public class VariableTheme {
         b = temp;
         System.out.println("Новые значения переменных: " + a + " и " + b);
         System.out.println("Перестановка значений переменных с помощью арифметических операций:");
-        a = b + a;
+        a += b;
         b = a - b;
-        a = a - b;
+        a -= b;
         System.out.println("Новые значения переменных: " + a + " и " + b);
         System.out.println("Перестановка значений переменных с помощью побитовых операций:");
-        a = a ^ b;
+        a ^= b;
         b = a ^ b;
-        a = a ^ b;
+        a ^= b;
         System.out.println("Новые значения переменных: " + a + " и " + b);
 
         System.out.println("\n6. Вывод символов и их кодов:");
@@ -106,13 +106,13 @@ public class VariableTheme {
         int number = 123;
         int hundreds = number / 100;
         int tens = number % 100 / 10;
-        int units = number % 10;
+        int ones = number % 10;
         System.out.println("Число " + number + " содержит:");
         System.out.println("\tсотен - " + hundreds);
         System.out.println("\tдесятков - " + tens);
-        System.out.println("\tединиц - " + units);
-        System.out.println("Сумма разрядов = " + (hundreds + tens + units));
-        System.out.println("Произведение разрядов = " + (hundreds * tens * units));
+        System.out.println("\tединиц - " + ones);
+        System.out.println("Сумма разрядов = " + (hundreds + tens + ones));
+        System.out.println("Произведение разрядов = " + (hundreds * tens * ones));
 
         System.out.println("\n9. Перевод секунд в часы, минуты и секунды:");
         int seconds = 86399;
@@ -123,10 +123,10 @@ public class VariableTheme {
         var penPriceBd = new BigDecimal("105.5");
         var bookPriceBd = new BigDecimal("235.83");
         var discountBd = new BigDecimal("0.11");
-        var basePrise = penPriceBd.add(bookPriceBd);
-        var discountAmount = basePrise.multiply(discountBd).setScale(2, RoundingMode.HALF_UP);
-        var discountPrice = basePrise.subtract(discountAmount).setScale(2, RoundingMode.HALF_UP);
-        System.out.println("Стоимость товаров без скидки: " + basePrise.toPlainString());
+        var basePrice = penPriceBd.add(bookPriceBd);
+        var discountAmount = basePrice.multiply(discountBd).setScale(2, RoundingMode.HALF_UP);
+        var discountPrice = basePrice.subtract(discountAmount).setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Стоимость товаров без скидки: " + basePrice.toPlainString());
         System.out.println("Сумма скидки: " + discountAmount.toPlainString());
         System.out.println("Стоимость товаров со скидкой: " + discountPrice);
     }

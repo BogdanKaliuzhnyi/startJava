@@ -41,11 +41,11 @@ public class IfElseStatementTheme {
         int a = 4;
         int b = 312;
         if (a > b) {
-            System.out.println("Первое число больше второго");
+            System.out.println("Число " + a + " больше числа " + b);
         } else if (a < b) {
-            System.out.println("Второе число больше первого");
+            System.out.println("Число " + b + " больше числа " + a);
         } else {
-            System.out.println("Числа равны");
+            System.out.println("Числа " + a + " и " + b + " равны");
         }
 
         System.out.println("\n3. Проверка числа");
@@ -70,21 +70,24 @@ public class IfElseStatementTheme {
         System.out.println("\n4. Поиск одинаковых цифр в числах:");
         int c = 123;
         int d = 223;
-        if (c % 10 == d % 10 || c / 10 == d) {
+        boolean isHundredsEqual = c / 100 == d / 100;
+        boolean isTensEqual = c % 100 / 10 == d % 100 / 10;
+        boolean isOnesEqual = c % 10 == d % 10;
+        if (isHundredsEqual || isTensEqual || isOnesEqual) {
             System.out.println("Исходные числа: " + c + " и " + d);
             System.out.print("Одинаковые цифры в числах: ");
             String radix = "";
-            if (c / 100 == d / 100) {
+            if (isHundredsEqual) {
                 System.out.print(c / 100 + " ");
-                radix = "3";
+                radix = "3 ";
             }
-            if (c % 100 / 10 == d % 100 / 10) {
-                System.out.print(" " + (c % 100 / 10));
-                radix = radix.concat(" 2");
+            if (isTensEqual) {
+                System.out.print((c % 100 / 10) + " ");
+                radix = radix.concat("2 ");
             }
-            if (c % 10 == d % 10) {
-                System.out.print(" " + (c % 10));
-                radix = radix.concat(" 1");
+            if (isOnesEqual) {
+                System.out.print((c % 10) + " ");
+                radix = radix.concat("1 ");
             }
             System.out.println("\nНомера разрядов одинаковых цифр: " + radix);
         } else {
@@ -94,65 +97,57 @@ public class IfElseStatementTheme {
         System.out.println("\n5. Определение символа по его коду");
         char symbol = '\u0057';
         System.out.print("'" + symbol + "' - ");
-        if (Character.isDigit(symbol)) {
+        if (Character.isUpperCase(symbol)) {
+            System.out.println("большая буква");
+        } else if (Character.isLowerCase(symbol)) {
+            System.out.println("маленькая буква");
+        } else if (Character.isDigit(symbol)) {
             System.out.println("цифра");
-        } else if (Character.isLetter(symbol)) {
-            if (Character.isUpperCase(symbol)) {
-                System.out.println("большая буква");
-            } else {
-                System.out.println("маленькая буква");
-            }
         } else {
             System.out.println("ни буква и ни цифра");
         }
 
         System.out.println("\n6. Подсчет начисленных банком %:");
         double deposit = 321123.59;
-        double rate;
+        double interestRate = 0.1;
         if (deposit < 100000) {
-            rate = 0.05;
+            interestRate = 0.05;
         } else if (deposit < 300000) {
-            rate = 0.07;
-        } else {
-            rate = 0.1;
+            interestRate = 0.07;
         }
         System.out.println("Сумма вклада: " + deposit);
-        System.out.printf("Сумма начисленных процентов по вкладу: %.2f\n", deposit * rate);
-        System.out.printf("Итоговая сумма, с %%: %.2f\n", deposit + deposit * rate);
+        System.out.printf("Сумма начисленных процентов по вкладу: %.2f\n", deposit * interestRate);
+        System.out.printf("Итоговая сумма, с %%: %.2f\n", deposit + deposit * interestRate);
 
         System.out.println("\n7. Определение оценки по предметам:");
-        double historyKnowledge = 0.59;
-        double csKnowledge = 0.92;
-        int historyGrade;
-        if (historyKnowledge <= 0.6) {
+        double historyPercent = 0.59;
+        int historyGrade = 5;
+        if (historyPercent <= 0.6) {
             historyGrade = 2;
-        } else if (historyKnowledge < 0.73) {
+        } else if (historyPercent < 0.73) {
             historyGrade = 3;
-        } else if (historyKnowledge < 0.91) {
+        } else if (historyPercent < 0.91) {
             historyGrade = 4;
-        } else {
-            historyGrade = 5;
         }
-        int csGrade;
-        if (csKnowledge <= 0.6) {
+        double csPercent = 0.92;
+        int csGrade = 5;
+        if (csPercent <= 0.6) {
             csGrade = 2;
-        } else if (csKnowledge < 0.73) {
+        } else if (csPercent < 0.73) {
             csGrade = 3;
-        } else if (csKnowledge < 0.91) {
+        } else if (csPercent < 0.91) {
             csGrade = 4;
-        } else {
-            csGrade = 5;
         }
         System.out.println("История: " + historyGrade);
         System.out.println("Программирование: " + csGrade);
-        System.out.printf("Средний балл оценок по предметам: %.2f\n", (double) (historyGrade + csGrade) / 2);
-        System.out.printf("Средний %% по предметам: %.2f\n", (historyKnowledge + csKnowledge) / 2 * 100);
+        System.out.printf("Средний балл оценок по предметам: %.2f\n", (historyGrade + csGrade) / 2d);
+        System.out.printf("Средний %% по предметам: %.2f\n", (historyPercent + csPercent) / 2 * 100);
 
         System.out.println("\n8. Расчет годовой прибыли:");
-        double monthlyGoodsSells = 16025.233;
+        double monthlySales = 16025.233;
         double monthlyRentRate = 5123.018;
         double productCost = 9001.729;
-        double annualProfit = 12 * (monthlyGoodsSells - monthlyRentRate - productCost);
+        double annualProfit = 12 * (monthlySales - monthlyRentRate - productCost);
         System.out.print("Прибыль за год: ");
         if (annualProfit > 0) {
             System.out.print("+");
@@ -160,30 +155,28 @@ public class IfElseStatementTheme {
         System.out.printf("%.2f руб.\n", annualProfit);
 
         System.out.println("\n9. Расчет годовой прибыл (бонус задача)");
-        var monthlySales = new BigDecimal("16025.233");
-        var monthlyRent = new BigDecimal("5123.018");
-        var monthlyCost = new BigDecimal("9001.729");
-        var monthlyProfit = monthlySales.subtract(monthlyRent).subtract(monthlyCost);
-        var annualProfit1 = monthlyProfit.multiply(new BigDecimal("12")).setScale(2, RoundingMode.HALF_UP);
+        var monthlySalesBd = new BigDecimal("16025.233");
+        var monthlyRentBd = new BigDecimal("5123.018");
+        var productCostBd = new BigDecimal("9001.729");
+        var monthlyProfit = monthlySalesBd.subtract(monthlyRentBd).subtract(productCostBd);
+        var annualProfitBd = monthlyProfit.multiply(BigDecimal.valueOf(12)).setScale(2, RoundingMode.HALF_UP);
         System.out.print("Прибыль за год: ");
-        if (annualProfit1.compareTo(BigDecimal.ZERO) > 0) {
+        if (annualProfitBd.compareTo(BigDecimal.ZERO) > 0) {
             System.out.print("+");
         }
-        System.out.println(annualProfit1 + " руб.\n");
+        System.out.println(annualProfitBd + " руб.\n");
 
         System.out.println("\n10. Подсчет начисленных банком % (бонус задача):");
-        var depositAmount = new BigDecimal("321123.59");
-        BigDecimal interestRate;
-        if (depositAmount.compareTo(new BigDecimal("100000")) < 0) {
-            interestRate = new BigDecimal("0.05");
-        } else if (depositAmount.compareTo(new BigDecimal("300000")) < 0) {
-            interestRate = new BigDecimal("0.07");
-        } else {
-            interestRate = new BigDecimal("0.1");
+        var depositBd = new BigDecimal("321123.59");
+        BigDecimal interestRateBd = new BigDecimal("0.1");
+        if (depositBd.compareTo(BigDecimal.valueOf(100000)) < 0) {
+            interestRateBd = new BigDecimal("0.05");
+        } else if (depositBd.compareTo(BigDecimal.valueOf(300000)) < 0) {
+            interestRateBd = new BigDecimal("0.07");
         }
-        var interestAmount = depositAmount.multiply(interestRate).setScale(2, RoundingMode.HALF_UP);
-        var totalAmount = depositAmount.add(interestAmount);
-        System.out.println("Сумма вклада: " + depositAmount);
+        var interestAmount = depositBd.multiply(interestRateBd).setScale(2, RoundingMode.HALF_UP);
+        var totalAmount = depositBd.add(interestAmount);
+        System.out.println("Сумма вклада: " + depositBd);
         System.out.println("Сумма начисленного %: " + interestAmount);
         System.out.println("Итоговая сумма с %: " + totalAmount);
     }
