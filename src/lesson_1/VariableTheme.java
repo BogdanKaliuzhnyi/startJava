@@ -27,10 +27,10 @@ public class VariableTheme {
         float penPrice = 105.5f;
         float bookPrice = 235.83f;
         float discount = 0.11f;
-        float totalPrice = penPrice + bookPrice;
-        System.out.printf("Стоимость товара без скидки: %.2f\n", totalPrice);
-        System.out.printf("Сумма скидки: %.2f\n", totalPrice * discount);
-        System.out.printf("Стоимость товара со скидкой: %.2f\n", totalPrice * (1 - discount));
+        float basePrice = penPrice + bookPrice;
+        System.out.printf("Стоимость товара без скидки: %.2f\n", basePrice);
+        System.out.printf("Сумма скидки: %.2f\n", basePrice * discount);
+        System.out.printf("Стоимость товара со скидкой: %.2f\n", basePrice * (1 - discount));
 
         System.out.println("\n3. Вывод слова JAVA:");
         System.out.println("    J    a  v     v  a    ");
@@ -123,11 +123,11 @@ public class VariableTheme {
         var penPriceBd = new BigDecimal("105.5");
         var bookPriceBd = new BigDecimal("235.83");
         var discountBd = new BigDecimal("0.11");
-        var basePrice = penPriceBd.add(bookPriceBd);
-        var discountAmount = basePrice.multiply(discountBd).setScale(2, RoundingMode.HALF_UP);
-        var discountPrice = basePrice.subtract(discountAmount).setScale(2, RoundingMode.HALF_UP);
-        System.out.println("Стоимость товаров без скидки: " + basePrice.toPlainString());
+        var basePriceBd = penPriceBd.add(bookPriceBd);
+        var discountAmount = basePriceBd.multiply(discountBd).setScale(2, RoundingMode.HALF_UP);
+        var totalPrice = basePriceBd.subtract(discountAmount).setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Стоимость товаров без скидки: " + basePriceBd.toPlainString());
         System.out.println("Сумма скидки: " + discountAmount.toPlainString());
-        System.out.println("Стоимость товаров со скидкой: " + discountPrice);
+        System.out.println("Стоимость товаров со скидкой: " + totalPrice);
     }
 }
