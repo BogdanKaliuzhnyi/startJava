@@ -144,27 +144,21 @@ public class IfElseStatementTheme {
         System.out.printf("Средний %% по предметам: %.2f\n", (historyPercent + csPercent) / 2 * 100);
 
         System.out.println("\n8. Расчет годовой прибыли:");
-        double monthlySales = 16025.233;
+        double monthlySales = 13025.233;
         double monthlyRentRate = 5123.018;
         double productCost = 9001.729;
         double annualProfit = 12 * (monthlySales - monthlyRentRate - productCost);
         System.out.print("Прибыль за год: ");
-        if (annualProfit > 0) {
-            System.out.print("+");
-        }
-        System.out.printf("%.2f руб.\n", annualProfit);
+        System.out.printf("%+.2f руб.\n", annualProfit);
 
         System.out.println("\n9. Расчет годовой прибыл (бонус задача)");
-        var monthlySalesBd = new BigDecimal("16025.233");
+        var monthlySalesBd = new BigDecimal("13025.233");
         var monthlyRentBd = new BigDecimal("5123.018");
         var productCostBd = new BigDecimal("9001.729");
         var monthlyProfit = monthlySalesBd.subtract(monthlyRentBd).subtract(productCostBd);
         var annualProfitBd = monthlyProfit.multiply(BigDecimal.valueOf(12)).setScale(2, RoundingMode.HALF_UP);
         System.out.print("Прибыль за год: ");
-        if (annualProfitBd.compareTo(BigDecimal.ZERO) > 0) {
-            System.out.print("+");
-        }
-        System.out.println(annualProfitBd + " руб.\n");
+        System.out.printf("%+.2f руб.\n", annualProfitBd);
 
         System.out.println("\n10. Подсчет начисленных банком % (бонус задача):");
         var depositBd = new BigDecimal("321123.59");

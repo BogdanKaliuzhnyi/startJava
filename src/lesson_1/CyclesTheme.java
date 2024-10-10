@@ -45,5 +45,33 @@ public class CyclesTheme {
         System.out.println("\nСумма выделенных цифр: " + sum);
 
         System.out.println("\n4.Вывод чисел в несколько строк:");
+        int c = 1;
+        int d = 24;
+        int lineLength = 5;
+        int scope = (d - c - 1);
+        int count = 0;
+        for (int i = c; i <= scope / lineLength * lineLength; i++) {
+            if (i % 2 != 0) {
+                System.out.printf("%-3d", 1);
+            } else {
+                System.out.printf("%-3d", 0);
+            }
+            count++;
+            if (count == lineLength) {
+                System.out.println();
+                count = 0;
+            }
+        }
+        int zeroLastLine = scope % lineLength;
+        for (int i = 1; i <= lineLength; i++) {
+            if (zeroLastLine != 0) {
+                System.out.printf("%-3d", 0);
+                zeroLastLine--;
+            } else if (i % 2 != 0) {
+                System.out.printf("%-3d", 1);
+            } else {
+                System.out.printf("%-3d", 0);
+            }
+        }
     }
 }
