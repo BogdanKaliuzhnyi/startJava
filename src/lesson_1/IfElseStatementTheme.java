@@ -149,7 +149,10 @@ public class IfElseStatementTheme {
         double productCost = 9001.729;
         double annualProfit = 12 * (monthlySales - monthlyRentRate - productCost);
         System.out.print("Прибыль за год: ");
-        System.out.printf("%+.2f руб.\n", annualProfit);
+        if (annualProfit > 0) {
+            System.out.print("+");
+        }
+        System.out.printf("%.2f руб.\n", annualProfit);
 
         System.out.println("\n9. Расчет годовой прибыл (бонус задача)");
         var monthlySalesBd = new BigDecimal("13025.233");
@@ -158,7 +161,10 @@ public class IfElseStatementTheme {
         var monthlyProfit = monthlySalesBd.subtract(monthlyRentBd).subtract(productCostBd);
         var annualProfitBd = monthlyProfit.multiply(BigDecimal.valueOf(12)).setScale(2, RoundingMode.HALF_UP);
         System.out.print("Прибыль за год: ");
-        System.out.printf("%+.2f руб.\n", annualProfitBd);
+        if (annualProfitBd.compareTo(BigDecimal.ZERO) > 0) {
+            System.out.print("+");
+        }
+        System.out.println(annualProfitBd + " руб.");
 
         System.out.println("\n10. Подсчет начисленных банком % (бонус задача):");
         var depositBd = new BigDecimal("321123.59");
