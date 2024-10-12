@@ -70,22 +70,22 @@ public class IfElseStatementTheme {
         System.out.println("\n4. Поиск одинаковых цифр в числах:");
         int c = 123;
         int d = 223;
-        boolean isHundredsEqual = c / 100 == d / 100;
-        boolean isTensEqual = c % 100 / 10 == d % 100 / 10;
-        boolean isOnesEqual = c % 10 == d % 10;
-        if (isHundredsEqual || isTensEqual || isOnesEqual) {
+        boolean isEqualHundreds = c / 100 == d / 100;
+        boolean isEqualTens = c % 100 / 10 == d % 100 / 10;
+        boolean isEqualOnes = c % 10 == d % 10;
+        if (isEqualHundreds || isEqualTens || isEqualOnes) {
             System.out.println("Исходные числа: " + c + " и " + d);
             System.out.print("Одинаковые цифры в числах: ");
             String radix = "";
-            if (isHundredsEqual) {
+            if (isEqualHundreds) {
                 System.out.print(c / 100 + " ");
                 radix = "3 ";
             }
-            if (isTensEqual) {
+            if (isEqualTens) {
                 System.out.print((c % 100 / 10) + " ");
                 radix = radix.concat("2 ");
             }
-            if (isOnesEqual) {
+            if (isEqualOnes) {
                 System.out.print((c % 10) + " ");
                 radix = radix.concat("1 ");
             }

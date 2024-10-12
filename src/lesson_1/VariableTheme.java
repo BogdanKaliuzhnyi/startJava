@@ -55,6 +55,10 @@ public class VariableTheme {
         System.out.println("Максимальное значение long: " + longNumber);
         System.out.println("Значение после инкремента long: " + ++longNumber);
         System.out.println("Значение после декремента long: " + --longNumber);
+        char charLength = 65535;
+        System.out.println("Максимальное значение char: " + charLength);
+        System.out.println("Значение после инкремента char: " + ++charLength);
+        System.out.println("Значение после декремента char: " + --charLength);
 
         System.out.println("\n5. Перестановка значений переменных:");
         int a = 2;
@@ -73,7 +77,7 @@ public class VariableTheme {
         System.out.println("Новые значения переменных: " + a + " и " + b);
         System.out.println("Перестановка значений переменных с помощью побитовых операций:");
         a ^= b;
-        b = a ^ b;
+        b ^= a;
         a ^= b;
         System.out.println("Новые значения переменных: " + a + " и " + b);
 
