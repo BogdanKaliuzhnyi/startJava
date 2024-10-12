@@ -146,7 +146,7 @@ public class CyclesTheme {
         System.out.println(" - " + (isPalindromic ? "палиндром" : "не палиндром"));
 
         System.out.println("\n9. Проверка, является ли число счастливым:");
-        int luckyNumber = 160300;
+        int luckyNumber = 123321;
         System.out.print("Число " + luckyNumber + " - ");
         int firstThreeNumber = 0;
         int lastThreeNumber = 0;
