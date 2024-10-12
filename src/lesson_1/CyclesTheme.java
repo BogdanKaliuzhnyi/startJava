@@ -146,7 +146,7 @@ public class CyclesTheme {
         System.out.println(" - " + (isPalindromic ? "палиндром" : "не палиндром"));
 
         System.out.println("\n9. Проверка, является ли число счастливым:");
-        int luckyNumber = 123321;
+        int luckyNumber = 160300;
         System.out.print("Число " + luckyNumber + " - ");
         int firstThreeNumber = 0;
         int lastThreeNumber = 0;
@@ -159,7 +159,7 @@ public class CyclesTheme {
             }
             luckyNumber /= 10;
         }
-        System.out.println(firstThreeNumber == lastThreeNumber ? "счастливое" : "не счастливое" + "число");
+        System.out.println(firstThreeNumber == lastThreeNumber ? "счастливое" : "не счастливое" + " число");
         System.out.println("Сумма первых трех чисел " + firstThreeNumber);
         System.out.println("Сумма последних трех чисел " + lastThreeNumber);
 
