@@ -30,7 +30,7 @@ public class CyclesTheme {
             System.out.print(i + " ");
         }
 
-        System.out.println("\n3. Вывод реверсивного числа и суммы его цифр:");
+        System.out.println("\n\n3. Вывод реверсивного числа и суммы его цифр:");
         int number = 1234;
         int sum = 0;
         System.out.print("Исходное числе в обратном порядке, поразрядно: ");
