@@ -40,15 +40,14 @@ public class CyclesTheme {
         System.out.println("\n\n3. Вывод реверсивного числа и суммы его цифр:");
         int number = 1234;
         int sum = 0;
-        int reversed = 0;
+        System.out.print("Исходное число в обратном порядке, поразрядно: ");
         while (number > 0) {
             int remainder = number % 10;
-            reversed = reversed * 10 + remainder;
+            System.out.print(remainder);
             number /= 10;
             sum += remainder;
         }
-        System.out.println("Исходное число в обратном порядке, поразрядно: " + reversed);
-        System.out.println("Сумма выделенных цифр: " + sum);
+        System.out.println("\nСумма выделенных цифр: " + sum);
 
         System.out.println("\n4. Вывод чисел в несколько строк:");
         int start = 1;
@@ -77,7 +76,7 @@ public class CyclesTheme {
         int numberWithTwos = 3242592;
         int countTwos = 0;
         System.out.print("В " + numberWithTwos + " ");
-        while (numberWithTwos / 10 != 0) {
+        while (numberWithTwos / 10 > 0) {
             if (numberWithTwos % 10 == 2) {
                 countTwos++;
             }
