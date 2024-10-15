@@ -27,7 +27,12 @@ public class Calculator {
                 System.out.println(result + (firstOperand * secondOperand));
                 break;
             } else if (operationSign.equals("/")) {
-                System.out.println(result + (firstOperand / secondOperand));
+                if (secondOperand != 0) {
+                    double quotient = (double) firstOperand / (double) secondOperand;
+                    System.out.printf("%s %.3f", result, quotient);
+                } else {
+                    System.out.println("Деление на 0!");
+                }
                 break;
             } else if (operationSign.equals("^")) {
                 int temp = firstOperand;
