@@ -6,11 +6,11 @@ public class Calculator {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("Введите первое натуральное число:");
+            System.out.print("Введите первое натуральное число: ");
             int firstOperand = sc.nextInt();
-            System.out.println("Введите оператор:");
+            System.out.print("Введите оператор: ");
             String operationSign = sc.next();
-            System.out.println("Введите второе натуральное число:");
+            System.out.print("Введите второе натуральное число: ");
             int secondOperand = sc.nextInt();
             if (firstOperand < 0 || secondOperand < 0) {
                 System.out.println("Введенные числа не являются натуральными");
@@ -29,7 +29,7 @@ public class Calculator {
             } else if (operationSign.equals("/")) {
                 if (secondOperand != 0) {
                     double quotient = (double) firstOperand / (double) secondOperand;
-                    System.out.printf("%s %.3f", result, quotient);
+                    System.out.printf("%s%.3f", result, quotient);
                 } else {
                     System.out.println("Деление на 0!");
                 }
