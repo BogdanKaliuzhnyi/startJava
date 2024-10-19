@@ -14,28 +14,27 @@ public class Calculator {
         if (a < 0 || b < 0) {
             System.out.println("Введенные числа не являются натуральными");
         }
-        String result = "";
-        String resultText = a + " " + mathOperation + " " + b + " = ";
+        int result;
         if (mathOperation.equals("+")) {
-            result = String.valueOf(a + b);
+            result = a + b;
         } else if (mathOperation.equals("-")) {
-            result = String.valueOf(a - b);
+            result = a - b;
         } else if (mathOperation.equals("*")) {
-            result = String.valueOf(a * b);
+            result = a * b;
         } else if (mathOperation.equals("/")) {
-            result = String.valueOf((double) a / (double) b);
+            result = a / b;
         } else if (mathOperation.equals("^")) {
-            int temp = a;
+            result = a;
             for (int i = 1; i < b; i++) {
-                temp *= a;
+                result *= a;
             }
-            result = String.valueOf(temp);
         } else if (mathOperation.equals("%")) {
-            result = String.valueOf(a % b);
+            result = a % b;
         } else {
             System.out.println("Введен неправильный оператор");
+            return;
         }
-        System.out.println(resultText + result);
+        System.out.println(a + " " + mathOperation + " " + b + " = " + result);
     }
 }
 
