@@ -8,30 +8,31 @@ public class Calculator {
         System.out.print("Введите первое натуральное число: ");
         int a = sc.nextInt();
         System.out.print("Введите оператор: ");
-        String mathOperation = sc.next();
+        char mathOperation = sc.next().charAt(0);
         System.out.print("Введите второе натуральное число: ");
         int b = sc.nextInt();
         if (a < 0 || b < 0) {
             System.out.println("Введенные числа не являются натуральными");
+            return;
         }
         int result;
-        if (mathOperation.equals("+")) {
+        if (mathOperation == '+') {
             result = a + b;
-        } else if (mathOperation.equals("-")) {
+        } else if (mathOperation == '-') {
             result = a - b;
-        } else if (mathOperation.equals("*")) {
+        } else if (mathOperation == '*') {
             result = a * b;
-        } else if (mathOperation.equals("/")) {
+        } else if (mathOperation == '/') {
             result = a / b;
-        } else if (mathOperation.equals("^")) {
-            result = a;
-            for (int i = 1; i < b; i++) {
+        } else if (mathOperation == '^') {
+            result = 1;
+            for (int i = 0; i < b; i++) {
                 result *= a;
             }
-        } else if (mathOperation.equals("%")) {
+        } else if (mathOperation == '%') {
             result = a % b;
         } else {
-            System.out.println("Введен неправильный оператор");
+            System.out.println("Операция " + mathOperation + " не поддерживается, попробуй другую");
             return;
         }
         System.out.println(a + " " + mathOperation + " " + b + " = " + result);
