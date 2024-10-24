@@ -3,17 +3,20 @@ package lesson_2;
 public class WolfTest {
     public static void main(String[] args) {
         Wolf alpha = new Wolf();
-        alpha.sex = "Самка";
-        alpha.name = "Сэдди";
-        alpha.weight = 13.7f;
-        alpha.age = 4;
-        alpha.colour = "Тёмно-серый";
+        alpha.setSex("Самка");
+        System.out.println("Пол волка: " + alpha.getSex());
 
-        System.out.println("Пол волка: " + alpha.sex);
-        System.out.println("Кличка волчицы : " + alpha.sex);
-        System.out.println("Вес волчицы : " + alpha.sex + " кг");
-        System.out.println("Возраст волчицы : " + alpha.sex + " лет");
-        System.out.println("Окрас волчицы : " + alpha.sex);
+        alpha.setNickname("Сэдди");
+        System.out.println("Кличка волчицы: " + alpha.getNickname());
+
+        alpha.setWeight(13.7f);
+        System.out.println("Вес волчицы: " + alpha.getWeight()+ " кг");
+
+        alpha.setAge(4);
+        System.out.println("Возраст волчицы: " + alpha.getAge() + " лет");
+
+        alpha.setColour("Темно-серый");
+        System.out.println("Окрас волчицы: " + alpha.getColour());
 
         alpha.walk();
         alpha.sit();

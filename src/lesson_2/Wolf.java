@@ -1,29 +1,77 @@
 package lesson_2;
 
 public class Wolf {
-    String sex;
-    String name;
-    float weight;
-    int age;
-    String colour;
+    private String sex;
 
-    void walk() {
-        System.out.println("Волк " + name + " идёт.");
+    public String getSex() {
+        return sex;
     }
 
-    void sit() {
-        System.out.println("Волк " + name + " сидит.");
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    void run() {
-        System.out.println("Волк " + name + " бежит очень быстро.");
+    private String nickname;
+
+    public String getNickname() {
+        return nickname;
     }
 
-    void howl() {
-        System.out.println("Волк " + name + " громко воет.");
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    void hunt() {
-        System.out.println("Волк " + name + " проголодался и вышел на охоту.");
+    private float weight;
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        if (age > 8) {
+            System.out.println("Некорректный возраст");
+        } else {
+            this.age = age;
+        }
+    }
+
+    private String colour;
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public void walk() {
+        System.out.println("Волк " + nickname + " идёт.");
+    }
+
+    public void sit() {
+        System.out.println("Волк " + nickname + " сидит.");
+    }
+
+    public void run() {
+        System.out.println("Волк " + nickname + " бежит очень быстро.");
+    }
+
+    public void howl() {
+        System.out.println("Волк " + nickname + " громко воет.");
+    }
+
+    public void hunt() {
+        System.out.println("Волк " + nickname + " проголодался и вышел на охоту.");
     }
 }
