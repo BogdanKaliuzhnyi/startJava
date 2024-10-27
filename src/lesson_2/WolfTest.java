@@ -15,8 +15,8 @@ public class WolfTest {
         alpha.setAge(4);
         System.out.println("Возраст волчицы: " + alpha.getAge() + " лет");
 
-        alpha.setColour("Темно-серый");
-        System.out.println("Окрас волчицы: " + alpha.getColour());
+        alpha.setColor("Темно-серый");
+        System.out.println("Окрас волчицы: " + alpha.getColor());
 
         alpha.walk();
         alpha.sit();

@@ -2,6 +2,10 @@ package lesson_2;
 
 public class Wolf {
     private String sex;
+    private String nickname;
+    private float weight;
+    private int age;
+    private String color;
 
     public String getSex() {
         return sex;
@@ -11,8 +15,6 @@ public class Wolf {
         this.sex = sex;
     }
 
-    private String nickname;
-
     public String getNickname() {
         return nickname;
     }
@@ -21,8 +23,6 @@ public class Wolf {
         this.nickname = nickname;
     }
 
-    private float weight;
-
     public float getWeight() {
         return weight;
     }
@@ -30,8 +30,6 @@ public class Wolf {
     public void setWeight(float weight) {
         this.weight = weight;
     }
-
-    private int age;
 
     public int getAge() {
         return age;
@@ -45,14 +43,12 @@ public class Wolf {
         }
     }
 
-    private String colour;
-
-    public String getColour() {
-        return colour;
+    public String getColor() {
+        return color;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void walk() {
