@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class CalculatorTest {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        boolean isCalculating;
+        String repeat;
+        Calculator calculator = new Calculator();
 
         do {
             System.out.print("Введите первое число: ");
@@ -14,15 +15,12 @@ public class CalculatorTest {
             char sign = sc.next().charAt(0);
             System.out.print("Введите второе число: ");
             int b = sc.nextInt();
-            Calculator.calculate(a, sign, b);
+            calculator.calculate(a, sign, b);
 
-            String repeat;
             do {
                 System.out.println("Хотите продолжить вычисления? [yes/no]:");
-                repeat = sc.next();
-            } while (!repeat.equalsIgnoreCase("yes") && !repeat.equalsIgnoreCase("no"));
-            isCalculating = repeat.equalsIgnoreCase("yes");
-
-        } while (isCalculating);
+                repeat = sc.next().toLowerCase();
+            } while (!repeat.equals("yes") && !repeat.equals("no"));
+        } while (repeat.equals("yes"));
     }
 }
