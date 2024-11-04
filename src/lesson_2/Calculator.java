@@ -15,17 +15,17 @@ public class Calculator {
                 result = a * b;
                 break;
             case '/':
-                if (isLegalDivider(b)) {
+                if (!isSecondNumberZero(b)) {
                     result = (double) a / b;
                 } else {
                     return;
                 }
                 break;
             case '^':
-                result = raisingPower(a, b);
+                result = pow(a, b);
                 break;
             case '%':
-                if (isLegalDivider(b)) {
+                if (!isSecondNumberZero(b)) {
                     result = a % b;
                 } else {
                     return;
@@ -35,30 +35,33 @@ public class Calculator {
                 System.out.println("Ошибка: операция '" + sign + "' не поддерживается.");
                 return;
         }
-
-        if (result % 1 == 0) {
-            System.out.println((int) result);
-        } else {
-            System.out.println(result);
-        }
+        printResult(result);
     }
 
-    boolean isLegalDivider(int b) {
+    private boolean isSecondNumberZero(int b) {
         if (b == 0) {
             System.out.println("Ошибка: деление на ноль запрещено");
         }
-        return b != 0;
+        return b == 0;
     }
 
-    double raisingPower(int a, int b) {
+    private double pow(int a, int b) {
         double result = 1;
-        for (int i = b > 0 ? b : b * -1; i > 0; i--) {
+        for (int i = Math.abs(b); i > 0; i--) {
             result *= a;
         }
         if (b > 0) {
             return result;
         } else {
             return 1 / result;
+        }
+    }
+
+    private void printResult(double result) {
+        if (result % 1 == 0) {
+            System.out.println((int) result);
+        } else {
+            System.out.println(result);
         }
     }
 }
