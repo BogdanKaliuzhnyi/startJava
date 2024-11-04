@@ -15,22 +15,20 @@ public class Calculator {
                 result = a * b;
                 break;
             case '/':
-                if (!isSecondNumberZero(b)) {
+                if (!isDivisibleByZero(b)) {
                     result = (double) a / b;
-                } else {
-                    return;
+                    break;
                 }
-                break;
+                return;
             case '^':
                 result = pow(a, b);
                 break;
             case '%':
-                if (!isSecondNumberZero(b)) {
+                if (!isDivisibleByZero(b)) {
                     result = a % b;
-                } else {
-                    return;
+                    break;
                 }
-                break;
+                return;
             default:
                 System.out.println("Ошибка: операция '" + sign + "' не поддерживается.");
                 return;
@@ -38,7 +36,7 @@ public class Calculator {
         printResult(result);
     }
 
-    private boolean isSecondNumberZero(int b) {
+    private boolean isDivisibleByZero(int b) {
         if (b == 0) {
             System.out.println("Ошибка: деление на ноль запрещено");
         }
@@ -50,11 +48,7 @@ public class Calculator {
         for (int i = Math.abs(b); i > 0; i--) {
             result *= a;
         }
-        if (b > 0) {
-            return result;
-        } else {
-            return 1 / result;
-        }
+        return b > 0 ? result : 1 / result;
     }
 
     private void printResult(double result) {
