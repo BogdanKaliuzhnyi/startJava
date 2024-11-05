@@ -15,7 +15,7 @@ public class Calculator {
                 result = a * b;
                 break;
             case '/':
-                if (!isDivisibleByZero(b)) {
+                if (!isZero(b)) {
                     result = (double) a / b;
                     break;
                 }
@@ -24,7 +24,7 @@ public class Calculator {
                 result = pow(a, b);
                 break;
             case '%':
-                if (!isDivisibleByZero(b)) {
+                if (!isZero(b)) {
                     result = a % b;
                     break;
                 }
@@ -36,7 +36,7 @@ public class Calculator {
         printResult(result);
     }
 
-    private boolean isDivisibleByZero(int b) {
+    private boolean isZero(int b) {
         if (b == 0) {
             System.out.println("Ошибка: деление на ноль запрещено");
         }

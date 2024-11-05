@@ -12,8 +12,8 @@ public class GuessNumberTest {
         String repeat;
 
         do {
-            GuessNumber game = new GuessNumber();
-            game.play(player1, player2);
+            GuessNumber game = new GuessNumber(player1, player2);
+            game.play();
             do {
                 System.out.println("Хотите продолжить игру? [yes/no]:");
                 repeat = sc.next().toLowerCase();
