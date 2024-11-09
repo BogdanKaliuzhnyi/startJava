@@ -17,14 +17,13 @@ public class GuessNumber {
 
     public void play() {
         Scanner sc = new Scanner(System.in);
-        while (true) {
+        do {
             inputNumber(player1, sc);
             if (isGuessed(player1)) {
                 break;
             }
             inputNumber(player2, sc);
-            isGuessed(player2);
-        }
+        } while (!isGuessed(player2));
     }
 
     private void inputNumber(Player player, Scanner sc) {
