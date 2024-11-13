@@ -2,12 +2,13 @@ package lesson_2;
 
 public class MethodNameTheme {
     public static void main(String[] args) {
-        MethodNameTheme m = new MethodNameTheme();
-        m.getNonBooleanMethods(new NonBooleanMethods());
-        m.getBooleanMethods(new BooleanMethods());
+        MethodNameTheme mnt = new MethodNameTheme();
+        mnt.doNonBooleanMethods();
+        mnt.doBooleanMethods();
     }
 
-    public void getNonBooleanMethods(NonBooleanMethods nbm) {
+    private void doNonBooleanMethods() {
+        NonBooleanMethods nbm = new NonBooleanMethods();
         nbm.findLongestWord();
         nbm.selectMenuItem();
         nbm.calculateAverageGrade();
@@ -19,23 +20,23 @@ public class MethodNameTheme {
         nbm.resetToFactorySettings();
         nbm.writeToFile();
         nbm.convertCelsiusToFahrenheit();
-        nbm.evaluateMathExpression();
+        nbm.inputMathExpression();
         nbm.determineWinner();
         nbm.findBook();
     }
 
-    public void getBooleanMethods(BooleanMethods bm) {
-        System.out.println();
-        bm.isRunning();
-        bm.isDeletedFile();
-        bm.hasUniqueDigits();
-        bm.isLetter();
-        bm.hasEqualDigits();
-        bm.hasRemainingAttempts();
-        bm.isEmptyStringOrSpaces();
-        bm.isEvenNumber();
-        bm.isValidPath();
-        bm.isExistFile();
+    private void doBooleanMethods() {
+        BooleanMethods bm = new BooleanMethods();
+        System.out.println("\n" + bm.isRunning());
+        System.out.println(bm.isDeletedFile());
+        System.out.println(bm.hasUniqueDigits());
+        System.out.println(bm.isLetter());
+        System.out.println(bm.hasEqualDigits());
+        System.out.println(bm.hasAttempts());
+        System.out.println(bm.isBlank());
+        System.out.println(bm.isEvenNumber());
+        System.out.println(bm.isValidPath());
+        System.out.println(bm.isExistFile());
     }
 }
 

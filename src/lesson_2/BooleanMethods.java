@@ -1,53 +1,54 @@
 package lesson_2;
 
 public class BooleanMethods {
-    public boolean isDeletedFile() {
-        System.out.println(MethodNameInfo.getName() + "() -> файл удален?");
-        return true;
-    }
-
-    public boolean isEmptyStringOrSpaces() {
-        System.out.println(MethodNameInfo.getName() + "() -> введена пустая строка или пробелы?");
-        return false;
-    }
-
-    public boolean isEvenNumber() {
-        System.out.println(MethodNameInfo.getName() + "() -> выпало четное число?");
-        return false;
-    }
-
-    public boolean isExistFile() {
-        System.out.println(MethodNameInfo.getName() + "() -> файл существует?");
-        return false;
-    }
-
-    public boolean isLetter() {
-        System.out.println(MethodNameInfo.getName() + "() -> была введена буква?");
-        return true;
-    }
-
     public boolean isRunning() {
-        System.out.println(MethodNameInfo.getName() + "() -> программа выполняется?");
+        System.out.print(MethodNameInfo.getName() + "() -> программа выполняется далее или завершается? ");
         return true;
     }
 
-    public boolean isValidPath() {
-        System.out.println(MethodNameInfo.getName() + "() -> путь к файлу действителен?");
-        return true;
-    }
-
-    public boolean hasEqualDigits() {
-        System.out.println(MethodNameInfo.getName() + "() -> есть равные цифры?");
-        return false;
-    }
-
-    public boolean hasRemainingAttempts() {
-        System.out.println(MethodNameInfo.getName() + "() -> остались еще попытки?");
+    public boolean isDeletedFile() {
+        System.out.print(MethodNameInfo.getName() + "() -> удалился ли файл на жестком диске или флешке? ");
         return true;
     }
 
     public boolean hasUniqueDigits() {
-        System.out.println(MethodNameInfo.getName() + "() -> последовательность содержит уникальную цифру?");
+        System.out.print(MethodNameInfo.getName() + "() -> последовательность содержит уникальную цифру? ");
+        return false;
+    }
+
+    public boolean isLetter() {
+        System.out.print(MethodNameInfo.getName() + "() -> пользователь ввел букву или что-то другое? ");
+        return true;
+    }
+
+    public boolean hasEqualDigits() {
+        System.out.print(MethodNameInfo.getName() + "() -> в проверяемых числах, есть равные цифры? ");
+        return true;
+    }
+
+    public boolean hasAttempts() {
+        System.out.print(MethodNameInfo.getName() + "() -> в игре \"Марио\" остались попытки? ");
+        return true;
+    }
+
+    public boolean isBlank() {
+        System.out.print(MethodNameInfo.getName() + "() -> пользователь ввёл пустую строку или из одних пробелов? ");
+        return false;
+    }
+
+    public boolean isEvenNumber() {
+        System.out.print(MethodNameInfo.getName() +
+                "() -> на кубике, который бросил компьютер, выпало четное число? ");
+        return false;
+    }
+
+    public boolean isValidPath() {
+        System.out.print(MethodNameInfo.getName() + "() -> путь до файла, который вы ищите на ssd, действительный? ");
+        return true;
+    }
+
+    public boolean isExistFile() {
+        System.out.print(MethodNameInfo.getName() + "() -> файл по указанному адресу существует? ");
         return false;
     }
 }
