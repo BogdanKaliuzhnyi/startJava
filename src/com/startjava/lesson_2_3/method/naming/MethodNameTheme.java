@@ -1,4 +1,4 @@
-package lesson_2;
+package com.startjava.lesson_2_3.method.naming;
 
 public class MethodNameTheme {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package lesson_2;
+package com.startjava.lesson_2_3.calculator;
 
 public class Calculator {
     public void calculate(int a, char sign, int b) {
