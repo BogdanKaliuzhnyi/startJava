@@ -19,7 +19,7 @@ public class ReverseArrayNumbers {
 
     private static void reverseArrayNumbers(int[] array) {
         if (array == null) {
-            System.out.println("Ошибка, невозможно выполнить операцию с массивом без ссылки\n");
+            System.out.println("Ошибка: Невозможно выполнить операцию с массивом без ссылки\n");
             return;
         }
 
