@@ -1,34 +1,41 @@
 package com.startjava.lesson_2_3_4.array;
 
-public class IncrementCalculation {
+public class MathOperation {
     public static void main(String[] args) {
         int[] empty = {};
-        controlArrayValue(empty);
+        calculateFactorials(empty);
         int[] nullArray = null;
-        controlArrayValue(nullArray);
+        calculateFactorials(nullArray);
         int[] threeNumbers = {8, 0, 9};
-        controlArrayValue(threeNumbers);
+        calculateFactorials(threeNumbers);
         int[] fourNumbers = {-3, 1, 7, 13};
-        controlArrayValue(fourNumbers);
+        calculateFactorials(fourNumbers);
         int[] twoNumbers = {-22, -0};
-        controlArrayValue(twoNumbers);
+        calculateFactorials(twoNumbers);
     }
 
-    private static void controlArrayValue(int[] array) {
-        if (array == null) {
-            System.out.println("Ошибка: Невозможно выполнить операцию с массивом без ссылки.\n");
-            return;
-        } else if (array.length == 0) {
-            System.out.println("Ошибка: В указанном массиве отсутствуют числа для получения их инкремента.\n");
+    private static void calculateFactorials(int[] array) {
+        if (!checkValue(array)) {
             return;
         }
         for (int number : array) {
-            doIncrementCalculation(number);
+            printNumberFactorial(number);
         }
         System.out.print('\n');
     }
 
-    private static void doIncrementCalculation(int... number) {
+    private static boolean checkValue(int[] array) {
+        if (array == null) {
+            System.out.println("Ошибка: массив не может быть null.\n");
+            return false;
+        } else if (array.length == 0) {
+            System.out.println("Ошибка: в указанном массиве отсутствуют числа.\n");
+            return false;
+        }
+        return true;
+    }
+
+    private static void printNumberFactorial(int... number) {
         int currentNumber = number[0];
 
         if (currentNumber < 0) {
