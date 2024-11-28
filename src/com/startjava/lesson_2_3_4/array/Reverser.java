@@ -2,22 +2,22 @@ package com.startjava.lesson_2_3_4.array;
 
 import java.util.Arrays;
 
-public class OrderOperation {
+public class Reverser {
     public static void main(String[] args) {
         int[] emptyArray = new int[0];
-        makeReversed(emptyArray);
+        reverse(emptyArray);
 
         int[] nullArray = null;
-        makeReversed(nullArray);
+        reverse(nullArray);
 
         int[] shortArray = {6, 8, 9, 1};
-        makeReversed(shortArray);
+        reverse(shortArray);
 
         int[] longArray = {13, 8, 5, 3, 2, 1, 1};
-        makeReversed(longArray);
+        reverse(longArray);
     }
 
-    private static void makeReversed(int[] original) {
+    private static void reverse(int[] original) {
         if (!isNull(original)) {
             return;
         }
