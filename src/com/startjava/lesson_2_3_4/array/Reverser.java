@@ -4,24 +4,22 @@ import java.util.Arrays;
 
 public class Reverser {
     public static void main(String[] args) {
+        int[] reversed;
         int[] emptyArray = new int[0];
-        reverse(emptyArray);
+        reversed = reverseNumbers(emptyArray);
+        printResult(emptyArray, reversed);
 
         int[] nullArray = null;
-        reverse(nullArray);
+        reversed = reverseNumbers(nullArray);
+        printResult(emptyArray, reversed);
 
         int[] shortArray = {6, 8, 9, 1};
-        reverse(shortArray);
+        reverseNumbers(shortArray);
+        printResult(emptyArray, reversed);
 
         int[] longArray = {13, 8, 5, 3, 2, 1, 1};
-        reverse(longArray);
-    }
-
-    private static void reverse(int[] original) {
-        if (!isNull(original)) {
-            return;
-        }
-        printResult(original, reverseNumbers(original));
+        reversed = reverseNumbers(longArray);
+        printResult(emptyArray, reversed);
     }
 
     private static boolean isNull(int[] original) {
@@ -33,6 +31,9 @@ public class Reverser {
     }
 
     private static int[] reverseNumbers(int[] original) {
+        if (!isNull(original)) {
+            return null;
+        }
         int length = original.length;
         int[] reversed = new int[length];
         for (int i : original) {
