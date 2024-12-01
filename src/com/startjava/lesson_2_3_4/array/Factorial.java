@@ -2,23 +2,26 @@ package com.startjava.lesson_2_3_4.array;
 
 public class Factorial {
     public static void main(String[] args) {
+        long[] factorials;
         int[] empty = {};
-        calculate(empty);
-        int[] nullArray = null;
-        calculate(nullArray);
-        int[] threeNumbers = {8, 0, 9};
-        calculate(threeNumbers);
-        int[] fourNumbers = {-3, 1, 7, 13};
-        calculate(fourNumbers);
-        int[] twoNumbers = {-22, -0};
-        calculate(twoNumbers);
-    }
+        factorials = fillArray(empty);
+        printResult(empty, factorials);
 
-    private static void calculate(int[] original) {
-        if (!checkValue(original)) {
-            return;
-        }
-        printResult(original, fillArray(original));
+        int[] nullArray = null;
+        factorials = fillArray(nullArray);
+        printResult(nullArray, factorials);
+
+        int[] threeNumbers = {8, 0, 9};
+        factorials = fillArray(threeNumbers);
+        printResult(threeNumbers, factorials);
+
+        int[] fourNumbers = {-3, 1, 7, 13};
+        factorials = fillArray(fourNumbers);
+        printResult(fourNumbers, factorials);
+
+        int[] twoNumbers = {-22, -0};
+        factorials = fillArray(twoNumbers);
+        printResult(twoNumbers, factorials);
     }
 
     private static boolean checkValue(int[] array) {
@@ -34,14 +37,17 @@ public class Factorial {
     }
 
     private static long[] fillArray(int[] original) {
+        if (!checkValue(original)) {
+            return null;
+        }
         long[] result = new long[original.length];
         for (int i = 0; i < original.length; i++) {
-            result[i] = calculateFactorial(original[i]);
+            result[i] = calculate(original[i]);
         }
         return result;
     }
 
-    private static long calculateFactorial(int... number) {
+    private static long calculate(int... number) {
         int currentNumber = number[0];
         if (currentNumber < 0) {
             return -1;
@@ -57,20 +63,27 @@ public class Factorial {
     }
 
     private static void printResult(int[] original, long[] factorials) {
+        if (factorials == null) {
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < factorials.length; i++) {
             if (original[i] < 0) {
-                System.out.println("Ошибка: факториал " + original[i] + "! не определен.");
+                System.out.println(sb.append("Ошибка: факториал ").append(original[i]).append("! не определен."));
+                sb.setLength(0);
                 continue;
             }
             if (original[i] <= 1) {
-                System.out.println(original[i] + "! = 1");
+                System.out.println(sb.append(original[i]).append("! = 1"));
+                sb.setLength(0);
                 continue;
             }
-            System.out.print(original[i] + "! = ");
+            sb.append(original[i]).append("! = ");
             for (int j = 1; j <= original[i]; j++) {
-                System.out.print(j != original[i] ? j + " * " : j + " = ");
+                sb.append(j != original[i] ? j + " * " : j + " = ");
             }
-            System.out.println(factorials[i]);
+            System.out.println(sb.append(factorials[i]));
+            sb.setLength(0);
         }
         System.out.println();
     }
