@@ -1,10 +1,10 @@
 package com.startjava.lesson_2_3_4.array;
 
-public class SortedTriangle {
+public class Triangle {
     public static void main(String[] args) {
-        System.out.println(buildTriangle('0', '9', true));
-        System.out.println(buildTriangle('/', '!', false));
-        System.out.println(buildTriangle('A', 'J', false));
+        System.out.println(buildSortedTriangle('0', '9', true));
+        System.out.println(buildSortedTriangle('/', '!', false));
+        System.out.println(buildSortedTriangle('A', 'J', false));
     }
 
     private static boolean validateBorders(int start, int end) {
@@ -19,7 +19,7 @@ public class SortedTriangle {
         return true;
     }
 
-    private static StringBuilder buildTriangle(char start, char end, boolean isAscendOrder) {
+    private static StringBuilder buildSortedTriangle(char start, char end, boolean isAscendOrder) {
         if (!validateBorders(start, end)) {
             return null;
         }
