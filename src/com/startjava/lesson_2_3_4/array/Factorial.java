@@ -4,27 +4,38 @@ public class Factorial {
     public static void main(String[] args) {
         long[] factorials;
         int[] empty = {};
-        factorials = fillArray(empty);
-        printResult(empty, factorials);
+        factorials = calculate(empty);
+        printFactorialsExpression(empty, factorials);
 
         int[] nullArray = null;
-        factorials = fillArray(nullArray);
-        printResult(nullArray, factorials);
+        factorials = calculate(nullArray);
+        printFactorialsExpression(nullArray, factorials);
 
         int[] threeNumbers = {8, 0, 9};
-        factorials = fillArray(threeNumbers);
-        printResult(threeNumbers, factorials);
+        factorials = calculate(threeNumbers);
+        printFactorialsExpression(threeNumbers, factorials);
 
         int[] fourNumbers = {-3, 1, 7, 13};
-        factorials = fillArray(fourNumbers);
-        printResult(fourNumbers, factorials);
+        factorials = calculate(fourNumbers);
+        printFactorialsExpression(fourNumbers, factorials);
 
         int[] twoNumbers = {-22, -0};
-        factorials = fillArray(twoNumbers);
-        printResult(twoNumbers, factorials);
+        factorials = calculate(twoNumbers);
+        printFactorialsExpression(twoNumbers, factorials);
     }
 
-    private static boolean checkValue(int[] array) {
+    private static long[] calculate(int[] original) {
+        if (!isNotEmpty(original)) {
+            return null;
+        }
+        long[] result = new long[original.length];
+        for (int i = 0; i < original.length; i++) {
+            result[i] = calcFactorial(original[i]);
+        }
+        return result;
+    }
+
+    private static boolean isNotEmpty(int[] array) {
         if (array == null) {
             System.out.println("Ошибка: массив не может быть null.\n");
             return false;
@@ -36,18 +47,7 @@ public class Factorial {
         return true;
     }
 
-    private static long[] fillArray(int[] original) {
-        if (!checkValue(original)) {
-            return null;
-        }
-        long[] result = new long[original.length];
-        for (int i = 0; i < original.length; i++) {
-            result[i] = calculate(original[i]);
-        }
-        return result;
-    }
-
-    private static long calculate(int... number) {
+    private static long calcFactorial(int... number) {
         int currentNumber = number[0];
         if (currentNumber < 0) {
             return -1;
@@ -62,28 +62,30 @@ public class Factorial {
         return result;
     }
 
-    private static void printResult(int[] original, long[] factorials) {
+    private static void printFactorialsExpression(int[] original, long[] factorials) {
         if (factorials == null) {
             return;
         }
-        StringBuilder sb = new StringBuilder();
+        StringBuilder expression = new StringBuilder();
         for (int i = 0; i < factorials.length; i++) {
             if (original[i] < 0) {
-                System.out.println(sb.append("Ошибка: факториал ").append(original[i]).append("! не определен."));
-                sb.setLength(0);
+                System.out.println(
+                        expression.append("Ошибка: факториал ").append(original[i]).append("! не определен."));
+                expression.setLength(0);
                 continue;
             }
-            if (original[i] <= 1) {
-                System.out.println(sb.append(original[i]).append("! = 1"));
-                sb.setLength(0);
+            if (original[i] > 1) {
+                expression.append(original[i]).append("! = ");
+                for (int j = 1; j <= original[i]; j++) {
+                    expression.append(j != original[i] ? j + " * " : j + " = ");
+                }
+                System.out.println(expression.append(factorials[i]));
+                expression.setLength(0);
                 continue;
             }
-            sb.append(original[i]).append("! = ");
-            for (int j = 1; j <= original[i]; j++) {
-                sb.append(j != original[i] ? j + " * " : j + " = ");
-            }
-            System.out.println(sb.append(factorials[i]));
-            sb.setLength(0);
+
+            System.out.println(expression.append(original[i]).append("! = 1"));
+            expression.setLength(0);
         }
         System.out.println();
     }
