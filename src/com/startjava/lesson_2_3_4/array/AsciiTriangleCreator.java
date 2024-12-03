@@ -21,12 +21,7 @@ public class AsciiTriangleCreator {
             triangle.append(String.valueOf((char) currentSymbol).repeat(1 + repeats++ * 2));
             triangle.append("\n");
             spaces--;
-
-            if (isAscendOrder) {
-                currentSymbol++;
-            } else {
-                currentSymbol--;
-            }
+            currentSymbol += isAscendOrder ? 1 : -1;
         }
         return triangle;
     }

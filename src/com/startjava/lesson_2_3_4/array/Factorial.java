@@ -25,41 +25,38 @@ public class Factorial {
     }
 
     private static long[] calculate(int[] original) {
-        if (!isNotEmpty(original)) {
+        if (isEmpty(original)) {
             return null;
         }
-        long[] result = new long[original.length];
+        long[] factorials = new long[original.length];
         for (int i = 0; i < original.length; i++) {
-            result[i] = calcFactorial(original[i]);
+            factorials[i] = calcFactorial(original[i]);
         }
-        return result;
+        return factorials;
     }
 
-    private static boolean isNotEmpty(int[] array) {
+    private static boolean isEmpty(int[] array) {
         if (array == null) {
             System.out.println("Ошибка: массив не может быть null.\n");
-            return false;
+            return true;
         }
         if (array.length == 0) {
             System.out.println("Ошибка: в указанном массиве отсутствуют числа.\n");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private static long calcFactorial(int... number) {
         int currentNumber = number[0];
-        if (currentNumber < 0) {
-            return -1;
-        }
-        if (currentNumber == 0) {
+        if (currentNumber <= 0) {
             return 0;
         }
-        long result = 1;
+        long factorial = 1;
         for (int i = 2; i <= currentNumber; i++) {
-            result *= i;
+            factorial *= i;
         }
-        return result;
+        return factorial;
     }
 
     private static void printFactorialsExpression(int[] original, long[] factorials) {
@@ -69,8 +66,8 @@ public class Factorial {
         StringBuilder expression = new StringBuilder();
         for (int i = 0; i < factorials.length; i++) {
             if (original[i] < 0) {
-                System.out.println(
-                        expression.append("Ошибка: факториал ").append(original[i]).append("! не определен."));
+                System.out.println(expression.append("Ошибка: факториал ")
+                        .append(original[i]).append("! не определен."));
                 expression.setLength(0);
                 continue;
             }
