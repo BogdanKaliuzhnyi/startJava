@@ -5,32 +5,28 @@ public class Factorial {
         long[] factorials;
         int[] empty = {};
         factorials = calculate(empty);
-        printFactorialsExpression(empty, factorials);
+        printFactorialsExpr(factorials, empty);
 
-        int[] nullArray = null;
-        factorials = calculate(nullArray);
-        printFactorialsExpression(nullArray, factorials);
+        factorials = calculate(null);
+        printFactorialsExpr(factorials, null);
 
-        int[] threeNumbers = {8, 0, 9};
-        factorials = calculate(threeNumbers);
-        printFactorialsExpression(threeNumbers, factorials);
+        factorials = calculate(8, 0, 9);
+        printFactorialsExpr(factorials, 8, 0, 9);
 
-        int[] fourNumbers = {-3, 1, 7, 13};
-        factorials = calculate(fourNumbers);
-        printFactorialsExpression(fourNumbers, factorials);
+        factorials = calculate(-3, 1, 7, 13);
+        printFactorialsExpr(factorials, -3, 1, 7, 13);
 
-        int[] twoNumbers = {-22, -0};
-        factorials = calculate(twoNumbers);
-        printFactorialsExpression(twoNumbers, factorials);
+        factorials = calculate(-22, -0);
+        printFactorialsExpr(factorials,-22, -0);
     }
 
-    private static long[] calculate(int[] original) {
-        if (isEmpty(original)) {
+    private static long[] calculate(int... numbers) {
+        if (isEmpty(numbers)) {
             return null;
         }
-        long[] factorials = new long[original.length];
-        for (int i = 0; i < original.length; i++) {
-            factorials[i] = calcFactorial(original[i]);
+        long[] factorials = new long[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            factorials[i] = calcFactorial(numbers[i]);
         }
         return factorials;
     }
@@ -47,19 +43,18 @@ public class Factorial {
         return false;
     }
 
-    private static long calcFactorial(int... number) {
-        int currentNumber = number[0];
-        if (currentNumber <= 0) {
+    private static long calcFactorial(int number) {
+        if (number <= 0) {
             return 0;
         }
         long factorial = 1;
-        for (int i = 2; i <= currentNumber; i++) {
+        for (int i = 2; i <= number; i++) {
             factorial *= i;
         }
         return factorial;
     }
 
-    private static void printFactorialsExpression(int[] original, long[] factorials) {
+    private static void printFactorialsExpr(long[] factorials, int... original) {
         if (factorials == null) {
             return;
         }
