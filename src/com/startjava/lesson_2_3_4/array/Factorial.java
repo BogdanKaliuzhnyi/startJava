@@ -3,9 +3,9 @@ package com.startjava.lesson_2_3_4.array;
 public class Factorial {
     public static void main(String[] args) {
         long[] factorials;
-        int[] empty = {};
-        factorials = calculate(empty);
-        printFactorialsExpr(factorials, empty);
+
+        factorials = calculate(new int[0]);
+        printFactorialsExpr(factorials, new int[0]);
 
         factorials = calculate(null);
         printFactorialsExpr(factorials, null);
