@@ -4,29 +4,29 @@ public class Factorial {
     public static void main(String[] args) {
         long[] factorials;
 
-        factorials = calculate(new int[0]);
+        factorials = calculateSequenceOfFactorials(new int[0]);
         printFactorialsExpr(factorials, new int[0]);
 
-        factorials = calculate(null);
+        factorials = calculateSequenceOfFactorials(null);
         printFactorialsExpr(factorials, null);
 
-        factorials = calculate(8, 0, 9);
+        factorials = calculateSequenceOfFactorials(8, 0, 9);
         printFactorialsExpr(factorials, 8, 0, 9);
 
-        factorials = calculate(-3, 1, 7, 13);
+        factorials = calculateSequenceOfFactorials(-3, 1, 7, 13);
         printFactorialsExpr(factorials, -3, 1, 7, 13);
 
-        factorials = calculate(-22, -0);
+        factorials = calculateSequenceOfFactorials(-22, -0);
         printFactorialsExpr(factorials,-22, -0);
     }
 
-    private static long[] calculate(int... numbers) {
+    private static long[] calculateSequenceOfFactorials(int... numbers) {
         if (isEmpty(numbers)) {
             return null;
         }
         long[] factorials = new long[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
-            factorials[i] = calcFactorial(numbers[i]);
+            factorials[i] = calculateFactorial(numbers[i]);
         }
         return factorials;
     }
@@ -43,7 +43,7 @@ public class Factorial {
         return false;
     }
 
-    private static long calcFactorial(int number) {
+    private static long calculateFactorial(int number) {
         if (number <= 0) {
             return 0;
         }

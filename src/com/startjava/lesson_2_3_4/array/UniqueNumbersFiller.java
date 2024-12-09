@@ -39,26 +39,25 @@ public class UniqueNumbersFiller {
     }
 
     private static int[] generateSorted(int start, int end, int amount) {
-        if (!isValidParameters(start, end, amount)) {
+        if (!isValidArgs(start, end, amount)) {
             return null;
         }
 
-        int[] randomUniqueNumbers = new int[calculateArrayLength(start, end)];
-        Arrays.fill(randomUniqueNumbers, -999999999);
+        int[] uniqueNumbersStorage = new int[calculateArrayLength(start, end)];
         Random random = new Random();
-        int uniqueNum;
 
-        for (int i = 0; i < randomUniqueNumbers.length; i++) {
+        for (int i = 0; i < uniqueNumbersStorage.length; i++) {
+            int uniqueNumber;
             do {
-                uniqueNum = random.nextInt(end + 1 - start) + start;
-            } while (!isUniqueNumber(randomUniqueNumbers, i, uniqueNum));
-            randomUniqueNumbers[i] = uniqueNum;
+                uniqueNumber = random.nextInt(start,end + 1);
+            } while (!isUniqueNumber(uniqueNumber, i, uniqueNumbersStorage));
+            uniqueNumbersStorage[i] = uniqueNumber;
         }
-        Arrays.sort(randomUniqueNumbers);
-        return randomUniqueNumbers;
+        Arrays.sort(uniqueNumbersStorage);
+        return uniqueNumbersStorage;
     }
 
-    private static boolean isValidParameters(int start, int end, int amount) {
+    private static boolean isValidArgs(int start, int end, int amount) {
         if (start > end) {
             System.out.printf("\nОшибка: левая граница (%d) > правой (%d)\n", start, end);
             return false;
@@ -86,7 +85,7 @@ public class UniqueNumbersFiller {
         return (int) Math.abs((end - start) * 0.75);
     }
 
-    private static boolean isUniqueNumber(int[] array, int index, int number) {
+    private static boolean isUniqueNumber(int number, int index, int[] array) {
         for (int i = 0; i <= index; i++) {
             if (array[i] == number) {
                 return false;
@@ -107,7 +106,7 @@ public class UniqueNumbersFiller {
 
         int counter = 0;
         for (int i = 0; i < array.length; i++) {
-            sequence.append(array[i]).append(i == array.length - 1 ? "." : ", ");
+            sequence.append(array[i]).append(i == array.length - 1 ? "" : " ");
             counter++;
             if (counter == amount) {
                 sequence.append("\n");
