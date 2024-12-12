@@ -17,13 +17,11 @@ public class UniqueNumbersFiller {
         uniqueNumbers = generateSorted(start, end, amount);
         printSequence(start, end, amount, uniqueNumbers);
 
-
         start = -34;
         end = -34;
         amount = 0;
         uniqueNumbers = generateSorted(start, end, amount);
         printSequence(start, end, amount, uniqueNumbers);
-
 
         start = -1;
         end = 2;
@@ -43,18 +41,18 @@ public class UniqueNumbersFiller {
             return null;
         }
 
-        int[] uniqueNumbersStorage = new int[calculateArrayLength(start, end)];
+        int[] uniqueNumbers = new int[calculateArrayLength(start, end)];
         Random random = new Random();
 
-        for (int i = 0; i < uniqueNumbersStorage.length; i++) {
+        for (int i = 0; i < uniqueNumbers.length; i++) {
             int uniqueNumber;
             do {
-                uniqueNumber = random.nextInt(start,end + 1);
-            } while (!isUniqueNumber(uniqueNumber, i, uniqueNumbersStorage));
-            uniqueNumbersStorage[i] = uniqueNumber;
+                uniqueNumber = random.nextInt(start, end + 1);
+            } while (!isUniqueNumber(uniqueNumber, i, uniqueNumbers));
+            uniqueNumbers[i] = uniqueNumber;
         }
-        Arrays.sort(uniqueNumbersStorage);
-        return uniqueNumbersStorage;
+        Arrays.sort(uniqueNumbers);
+        return uniqueNumbers;
     }
 
     private static boolean isValidArgs(int start, int end, int amount) {
@@ -99,9 +97,12 @@ public class UniqueNumbersFiller {
             return;
         }
 
-        System.out.printf("\nВ заданной границе [%d, %d] создан массив из уникальных чисел.\n", start, end);
-        System.out.println(Arrays.toString(array));
-        System.out.printf("Печать массива с отображение %d чисел в строке:\n", amount);
+        System.out.printf("\nВ заданной границе [%d, %d] создан массив из уникальных чисел:\n", start, end);
+        for (int number : array) {
+            System.out.print(number + " ");
+        }
+
+        System.out.printf("\nПечать массива с отображение %d чисел в строке:\n", amount);
         StringBuilder sequence = new StringBuilder();
 
         int counter = 0;

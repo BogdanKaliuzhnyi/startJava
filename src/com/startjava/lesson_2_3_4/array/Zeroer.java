@@ -53,14 +53,14 @@ public class Zeroer {
         System.out.print("  Исходный массив: [");
         for (int i = 0; i < original.length; i++) {
             System.out.printf(locale, "%.3f" + (i != original.length - 1 ? ", " : "]"), original[i]);
-            if (i !=0 && i % 8 == 0) {
+            if (i != 0 && i % 8 == 0) {
                 System.out.println();
             }
         }
         System.out.print("\nИзмененный массив: [");
         for (int i = 0; i < copy.length; i++) {
             System.out.printf(locale, "%.3f" + (i != copy.length - 1 ? ", " : "]"), copy[i]);
-            if (i !=0 && i % 8 == 0) {
+            if (i != 0 && i % 8 == 0) {
                 System.out.println();
             }
         }
