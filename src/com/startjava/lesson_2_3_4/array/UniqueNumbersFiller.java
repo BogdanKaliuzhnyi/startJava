@@ -98,13 +98,14 @@ public class UniqueNumbersFiller {
         }
 
         System.out.printf("\nВ заданной границе [%d, %d] создан массив из уникальных чисел:\n", start, end);
-        for (int number : array) {
-            System.out.print(number + " ");
-        }
+        System.out.println(makeSequence(array.length, array));
 
         System.out.printf("\nПечать массива с отображение %d чисел в строке:\n", amount);
-        StringBuilder sequence = new StringBuilder();
+        System.out.println(makeSequence(amount, array));
+    }
 
+    private static StringBuilder makeSequence(int amount, int[] array) {
+        StringBuilder sequence = new StringBuilder();
         int counter = 0;
         for (int i = 0; i < array.length; i++) {
             sequence.append(array[i]).append(i == array.length - 1 ? "" : " ");
@@ -114,6 +115,6 @@ public class UniqueNumbersFiller {
                 counter = 0;
             }
         }
-        System.out.println(sequence);
+        return sequence;
     }
 }

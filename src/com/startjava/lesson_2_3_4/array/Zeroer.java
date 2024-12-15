@@ -1,5 +1,6 @@
 package com.startjava.lesson_2_3_4.array;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 public class Zeroer {
@@ -9,12 +10,11 @@ public class Zeroer {
         int[] indexes = {-1, 15, 0, 14};
 
         for (int index : indexes) {
-            if (!checkIndex(length, index)) {
-                continue;
+            if (isValidIndex(length, index)) {
+                double[] copy = Arrays.copyOf(original, original.length);
+                fillZeros(copy, index);
+                printResult(original, copy, index);
             }
-            double[] copy = copyArray(original);
-            fillZeros(copy, index);
-            printResult(original, copy, index);
         }
     }
 
@@ -26,20 +26,12 @@ public class Zeroer {
         return array;
     }
 
-    private static boolean checkIndex(int length, int index) {
+    private static boolean isValidIndex(int length, int index) {
         if (index < 0 || index > length - 1) {
             System.out.println("Ошибка: некорректный индекс " + index + "\n");
             return false;
         }
         return true;
-    }
-
-    private static double[] copyArray(double[] original) {
-        double[] arrayCopy = new double[original.length];
-        for (int i = 0; i < original.length; i++) {
-            arrayCopy[i] = original[i];
-        }
-        return arrayCopy;
     }
 
     private static void fillZeros(double[] copy, int index) {
@@ -49,22 +41,21 @@ public class Zeroer {
     }
 
     private static void printResult(double[] original, double[] copy, int index) {
-        Locale locale = Locale.US;
         System.out.print("  Исходный массив: [");
-        for (int i = 0; i < original.length; i++) {
-            System.out.printf(locale, "%.3f" + (i != original.length - 1 ? ", " : "]"), original[i]);
-            if (i != 0 && i % 8 == 0) {
-                System.out.println();
-            }
-        }
+        printArray(original);
         System.out.print("\nИзмененный массив: [");
-        for (int i = 0; i < copy.length; i++) {
-            System.out.printf(locale, "%.3f" + (i != copy.length - 1 ? ", " : "]"), copy[i]);
-            if (i != 0 && i % 8 == 0) {
-                System.out.println();
-            }
-        }
+        printArray(copy);
         System.out.printf("\nЗначение из ячейки по индексу %d: %.3f", index, original[index]);
         System.out.println("\nКоличество обнуленных ячеек: " + (original.length - index) + "\n");
+    }
+
+    private static void printArray(double[] array) {
+        Locale locale = Locale.US;
+        for (int i = 0; i < array.length; i++) {
+            System.out.printf(locale, "%.3f" + (i != array.length - 1 ? ", " : "]"), array[i]);
+            if (i != 0 && i % 7 == 0) {
+                System.out.println();
+            }
+        }
     }
 }
