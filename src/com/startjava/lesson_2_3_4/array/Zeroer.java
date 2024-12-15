@@ -1,7 +1,6 @@
 package com.startjava.lesson_2_3_4.array;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 public class Zeroer {
     public static void main(String[] args) {
@@ -12,8 +11,8 @@ public class Zeroer {
         for (int index : indexes) {
             if (isValidIndex(length, index)) {
                 double[] copy = Arrays.copyOf(original, original.length);
-                fillZeros(copy, index);
-                printResult(original, copy, index);
+                int amount = fillZeros(copy, index);
+                printResult(original, copy, index, amount);
             }
         }
     }
@@ -34,25 +33,29 @@ public class Zeroer {
         return true;
     }
 
-    private static void fillZeros(double[] copy, int index) {
-        for (int i = index; i < copy.length; i++) {
-            copy[i] = 0.0;
+    private static int fillZeros(double[] copy, int index) {
+        int amount = 0;
+        for (int i = 0; i < copy.length; i++) {
+            if (copy[i] > copy[index]) {
+                copy[i] = 0.0;
+                amount++;
+            }
         }
+        return amount;
     }
 
-    private static void printResult(double[] original, double[] copy, int index) {
-        System.out.print("  Исходный массив: [");
+    private static void printResult(double[] original, double[] copy, int index, int amount) {
+        System.out.print("  Исходный массив:\n[");
         printArray(original);
-        System.out.print("\nИзмененный массив: [");
+        System.out.print("\nИзмененный массив:\n[");
         printArray(copy);
         System.out.printf("\nЗначение из ячейки по индексу %d: %.3f", index, original[index]);
-        System.out.println("\nКоличество обнуленных ячеек: " + (original.length - index) + "\n");
+        System.out.println("\nКоличество обнуленных ячеек: " + amount + "\n");
     }
 
     private static void printArray(double[] array) {
-        Locale locale = Locale.US;
         for (int i = 0; i < array.length; i++) {
-            System.out.printf(locale, "%.3f" + (i != array.length - 1 ? ", " : "]"), array[i]);
+            System.out.printf("%.3f" + (i != array.length - 1 ? ", " : "]"), array[i]);
             if (i != 0 && i % 7 == 0) {
                 System.out.println();
             }
