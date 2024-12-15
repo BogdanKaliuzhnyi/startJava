@@ -37,7 +37,7 @@ public class TypewriterStylePrinter {
     }
 
     private static String[] splitText(String text) {
-        return text.split("\\s");
+        return text.split("[ \\t\\r]");
     }
 
     private static int[] findShortestLongestWordIndexes(String[] separatedText) {
