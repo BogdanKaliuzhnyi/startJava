@@ -7,14 +7,14 @@ public class Arrays {
         throw new AssertionError();
     }
 
-    public static void asciiTriangleCreator(char start, char end, boolean isAscendOrder) {
+    public static StringBuilder asciiTriangleCreator(char start, char end, boolean isAscendOrder) {
         if (start < 0 || end < 0 || start > 255 || end > 255) {
-            Console.printBordersError();
-            return;
+            Console.printInputError("указанные границы выходят за пределы допустимых значений [0:255]");
+            return null;
         }
         if (start > end) {
-            Console.printBordersOrderError(start, end);
-            return;
+            Console.printInputError("левая граница (" + (int) start + ") > правой (" + (int) end + ")");
+            return null;
         }
 
         int currentSymbol = isAscendOrder ? start : end;
@@ -28,18 +28,18 @@ public class Arrays {
             spaces--;
             currentSymbol += isAscendOrder ? 1 : -1;
         }
-        Console.printTriangle(triangle);
+        return triangle;
     }
 
-    public static void factorial(int... numbers) {
+    public static StringBuilder factorial(int... numbers) {
         if (isNull(numbers)) {
             Console.printArrayEmptyError(true);
-            return;
+            return null;
         }
         int length = numbers.length;
         if (length == 0) {
             Console.printArrayEmptyError(false);
-            return;
+            return null;
         }
 
         long[] factorials = new long[length];
@@ -54,8 +54,7 @@ public class Arrays {
         StringBuilder expression = new StringBuilder();
         for (int i = 0; i < length; i++) {
             if (numbers[i] < 0) {
-                Console.printFactorialError(numbers[i]);
-                expression.setLength(0);
+                Console.printInputError("факториал " + numbers[i] + "! не определен");
                 continue;
             }
             if (numbers[i] > 1) {
@@ -63,31 +62,30 @@ public class Arrays {
                 for (int j = 1; j <= numbers[i]; j++) {
                     expression.append(j != numbers[i] ? j + " * " : j + " = ");
                 }
-                Console.printFactorialExpr(expression.append(factorials[i]));
-                expression.setLength(0);
+                expression.append(factorials[i]).append(i == length - 1 ? "" : "\n");
                 continue;
             }
-            Console.printFactorialExpr(expression.append(numbers[i]).append("! = 1"));
-            expression.setLength(0);
+            expression.append(numbers[i]).append("! = 1\n");
         }
+        return expression;
     }
 
-    public static void reverser(int[] original) {
+    public static int[] reverser(int[] original) {
         if (isNull(original)) {
             Console.printArrayEmptyError(true);
-            return;
+            return null;
         }
         int length = original.length;
         int[] reversed = new int[length];
         for (int i : original) {
             reversed[--length] = i;
         }
-        Console.printReversedNumbers(original, reversed);
+        return reversed;
     }
 
-    public static void typewriterStylePrinter(String originalText) throws InterruptedException {
-        if (originalText == null || originalText.isBlank()) {
-            return;
+    public static StringBuilder typewriterStylePrinter(String originalText) throws InterruptedException {
+        if (isNull(originalText) || originalText.isBlank()) {
+            return null;
         }
 
         String[] separatedText = originalText.split("[ \\t\\r]");
@@ -120,39 +118,45 @@ public class Arrays {
             }
             mergedText.append(i == separatedText.length - 1 ? "" : " ");
         }
-        Console.type(mergedText);
+        return mergedText;
     }
 
-    public static void uniqueNumberFiller(int start, int end, int amount) {
+    public static StringBuilder uniqueNumberFiller(int start, int end, int amount) {
         if (start > end) {
-            Console.printBordersOrderError(start, end);
-            return;
+            Console.printInputError("левая граница (" + start + ") > правой (" + end + ")");
+            return null;
         }
         if (amount < 1) {
-            Console.printAmountNumbersPerLineError(amount);
-            return;
+            Console.printInputError("количество чисел в строке не может быть меньше 1 (" + amount + ")");
+            return null;
         }
         int length = (int) Math.abs((end - start) * 0.75);
         if (length < 1) {
-            Console.printArrayLengthError(length);
-            return;
+            Console.printInputError("длина массива должна быть больше 0 (" + length + ")");
+            return null;
         }
         if (length < amount) {
-            Console.printArrayLengthError(length, amount);
-            return;
+            Console.printInputError(" количество чисел " + amount + " в строке не может быть больше " +
+                    "длины массива (" + length + ")");
+            return null;
         }
 
         int[] uniqueNumbers = new int[length];
         Random random = new Random();
         for (int i = 0; i < length; i++) {
             boolean isUniqueNumber = true;
-            while (isUniqueNumber) {
+            do {
                 int uniqueNumber = random.nextInt(start, end + 1);
                 for (int j = 0; j <= i; j++) {
-                    isUniqueNumber = uniqueNumbers[j] == uniqueNumber;
+                    isUniqueNumber = uniqueNumbers[j] != uniqueNumber;
+                    if (!isUniqueNumber) {
+                        break;
+                    }
                 }
-                uniqueNumbers[i] = uniqueNumber;
-            }
+                if (isUniqueNumber) {
+                    uniqueNumbers[i] = uniqueNumber;
+                }
+            } while (!isUniqueNumber);
         }
 
         java.util.Arrays.sort(uniqueNumbers);
@@ -160,7 +164,7 @@ public class Arrays {
         StringBuilder changedSequence = new StringBuilder();
         int counter = 0;
         for (int i = 0; i < length; i++) {
-            originalSequence.append(uniqueNumbers[i]).append(i == length - 1 ? "" : " ");
+            originalSequence.append(uniqueNumbers[i]).append(i == length - 1 ? "\n" : " ");
             changedSequence.append(uniqueNumbers[i]).append(i == length - 1 ? "" : " ");
             counter++;
             if (counter == amount) {
@@ -168,54 +172,55 @@ public class Arrays {
                 counter = 0;
             }
         }
-        Console.printUniqueNumbersArray(originalSequence, start, end);
-        originalSequence.setLength(0);
-        Console.printUniqueNumbersArray(changedSequence, amount);
-        changedSequence.setLength(0);
+        StringBuilder resultSequence = new StringBuilder("В заданной границе [" + start + ", " + end + "] ");
+        resultSequence.append("создан массив из уникальных чисел:\n").append(originalSequence);
+        resultSequence.append("Печать массива с отображение ").append(amount).append(" чисел в строке:\n");
+        return resultSequence.append(changedSequence);
     }
 
-    public static void zeroer(int length, int[] indexes) {
-        for (int index : indexes) {
-            if (index >= 0 && index < length) {
-                double[] originalArray = new double[length];
-                for (int i = 0; i < length; i++) {
-                    originalArray[i] = Math.random();
-                }
+    public static StringBuilder zeroer(int index) {
+        StringBuilder summaryMessage = new StringBuilder();
+        int length = 15;
+        if (index < 0 || index >= length) {
+            Console.printInputError("некорректный индекс " + index);
+            return null;
+        }
 
-                double[] zeroedArray = java.util.Arrays.copyOf(originalArray, length);
-                StringBuilder originalMessage = new StringBuilder();
-                StringBuilder zeroedMessage = new StringBuilder();
-                int amount = 0;
-                for (int i = 0; i < length; i++) {
-                    if (zeroedArray[i] > zeroedArray[index]) {
-                        zeroedArray[i] = 0.0;
-                        amount++;
-                    }
-                }
-                originalMessage.append("  Исходный массив:\n[");
-                zeroedMessage.append("\nИзмененный массив:\n[");
-                for (int i = 0; i < length; i++) {
-                    originalMessage.append(String.format("%.3f", originalArray[i]));
-                    originalMessage.append(i != length - 1 ? " " : "]");
-                    zeroedMessage.append(String.format("%.3f", zeroedArray[i]));
-                    zeroedMessage.append(i != length - 1 ? " " : "]");
-                    if (i != 0 && i % 7 == 0) {
-                        zeroedMessage.append("\n");
-                    }
-                }
-                zeroedMessage.append("\nЗначение из ячейки по индексу ");
-                zeroedMessage.append(String.format("%d: %.3f", index, originalArray[index]));
-                zeroedMessage.append(String.format("\nКоличество обнуленных ячеек: %d\n", amount));
+        double[] originalArray = new double[length];
+        for (int i = 0; i < length; i++) {
+            originalArray[i] = Math.random();
+        }
 
-                Console.printZeroerArrays(originalMessage);
-                Console.printZeroerArrays(zeroedMessage);
-            } else {
-                Console.printIncorrectIndex(index);
+        double[] zeroedArray = java.util.Arrays.copyOf(originalArray, length);
+        StringBuilder originalMessage = new StringBuilder();
+        StringBuilder zeroedMessage = new StringBuilder();
+        int amount = 0;
+        for (int i = 0; i < length; i++) {
+            if (zeroedArray[i] > zeroedArray[index]) {
+                zeroedArray[i] = 0.0;
+                amount++;
             }
         }
-    }
+        originalMessage.append("  Исходный массив:\n[");
+        zeroedMessage.append("\nИзмененный массив:\n[");
+        for (int i = 0; i < length; i++) {
+            if (i != 0 && i % 8 == 0) {
+                originalMessage.append("\n");
+                zeroedMessage.append("\n");
+            }
+            originalMessage.append(String.format("%.3f", originalArray[i]));
+            originalMessage.append(i != length - 1 ? " " : "]");
+            zeroedMessage.append(String.format("%.3f", zeroedArray[i]));
+            zeroedMessage.append(i != length - 1 ? " " : "]");
+        }
+        zeroedMessage.append("\nЗначение из ячейки по индексу ");
+        zeroedMessage.append(String.format("%d: %.3f", index, originalArray[index]));
+        zeroedMessage.append(String.format("\nКоличество обнуленных ячеек: %d\n", amount));
+        summaryMessage.append(originalMessage).append(zeroedMessage);
+        return summaryMessage;
+}
 
-    private static boolean isNull(int[] array) {
-        return array == null;
-    }
+private static boolean isNull(Object object) {
+    return object == null;
+}
 }

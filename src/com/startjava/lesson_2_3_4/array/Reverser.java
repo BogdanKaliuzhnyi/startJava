@@ -10,15 +10,15 @@ public class Reverser {
 
         int[] nullArray = null;
         reversed = reverse(nullArray);
-        printResult(emptyArray, reversed);
+        printResult(nullArray, reversed);
 
         int[] shortArray = {6, 8, 9, 1};
         reverse(shortArray);
-        printResult(emptyArray, reversed);
+        printResult(shortArray, reversed);
 
         int[] longArray = {13, 8, 5, 3, 2, 1, 1};
         reversed = reverse(longArray);
-        printResult(emptyArray, reversed);
+        printResult(longArray, reversed);
     }
 
     private static int[] reverse(int[] original) {
