@@ -7,32 +7,8 @@ public class Arrays {
         throw new AssertionError();
     }
 
-    public static StringBuilder asciiTriangleCreator(char start, char end, boolean isAscendOrder) {
-        if (start < 0 || end < 0 || start > 255 || end > 255) {
-            Console.printInputError("указанные границы выходят за пределы допустимых значений [0:255]");
-            return null;
-        }
-        if (start > end) {
-            Console.printInputError("левая граница (" + (int) start + ") > правой (" + (int) end + ")");
-            return null;
-        }
-
-        int currentSymbol = isAscendOrder ? start : end;
-        StringBuilder triangle = new StringBuilder();
-        int spaces = end - start;
-        int repeats = 0;
-        while (currentSymbol >= start && currentSymbol <= end) {
-            triangle.append(" ".repeat(spaces));
-            triangle.append(String.valueOf((char) currentSymbol).repeat(1 + repeats++ * 2));
-            triangle.append("\n");
-            spaces--;
-            currentSymbol += isAscendOrder ? 1 : -1;
-        }
-        return triangle;
-    }
-
-    public static StringBuilder factorial(int... numbers) {
-        if (isNull(numbers)) {
+    public static StringBuilder calculateFactorials(int... numbers) {
+        if (numbers == null) {
             Console.printArrayEmptyError(true);
             return null;
         }
@@ -70,58 +46,31 @@ public class Arrays {
         return expression;
     }
 
-    public static int[] reverser(int[] original) {
-        if (isNull(original)) {
-            Console.printArrayEmptyError(true);
+    public static StringBuilder createAsciiTriangle(char start, char end, boolean isAscendOrder) {
+        if (start < 0 || end < 0 || start > 255 || end > 255) {
+            Console.printInputError("указанные границы выходят за пределы допустимых значений [0:255]");
             return null;
         }
-        int length = original.length;
-        int[] reversed = new int[length];
-        for (int i : original) {
-            reversed[--length] = i;
-        }
-        return reversed;
-    }
-
-    public static StringBuilder typewriterStylePrinter(String originalText) throws InterruptedException {
-        if (isNull(originalText) || originalText.isBlank()) {
+        if (start > end) {
+            Console.printInputError("левая граница (" + (int) start + ") > правой (" + (int) end + ")");
             return null;
         }
 
-        String[] separatedText = originalText.split("[ \\t\\r]");
-        int shortestLen = 10;
-        int shortestIndex = 0;
-        int longestLen = 0;
-        int longestIndex = 0;
-
-        for (int i = 0; i < separatedText.length; i++) {
-            int wordLen = separatedText[i].replaceAll("\\p{P}", "").length();
-            if (wordLen == 0) {
-                continue;
-            }
-            shortestLen = Math.min(shortestLen, wordLen);
-            if (shortestLen == wordLen) {
-                shortestIndex = i;
-            }
-            longestLen = Math.max(longestLen, wordLen);
-            if (longestLen == wordLen) {
-                longestIndex = i;
-            }
+        int currentSymbol = isAscendOrder ? start : end;
+        StringBuilder triangle = new StringBuilder();
+        int spaces = end - start;
+        int repeats = 0;
+        while (currentSymbol >= start && currentSymbol <= end) {
+            triangle.append(" ".repeat(spaces));
+            triangle.append(String.valueOf((char) currentSymbol).repeat(1 + repeats++ * 2));
+            triangle.append("\n");
+            spaces--;
+            currentSymbol += isAscendOrder ? 1 : -1;
         }
-
-        StringBuilder mergedText = new StringBuilder();
-        for (int i = 0; i < separatedText.length; i++) {
-            if (i >= Math.min(shortestIndex, longestIndex) && i <= Math.max(shortestIndex, longestIndex)) {
-                mergedText.append(separatedText[i].toUpperCase());
-            } else {
-                mergedText.append(separatedText[i]);
-            }
-            mergedText.append(i == separatedText.length - 1 ? "" : " ");
-        }
-        return mergedText;
+        return triangle;
     }
 
-    public static StringBuilder uniqueNumberFiller(int start, int end, int amount) {
+    public static int[] generateUniqueNumbers(int start, int end, int amount) {
         if (start > end) {
             Console.printInputError("левая граница (" + start + ") > правой (" + end + ")");
             return null;
@@ -160,67 +109,78 @@ public class Arrays {
         }
 
         java.util.Arrays.sort(uniqueNumbers);
-        StringBuilder originalSequence = new StringBuilder();
-        StringBuilder changedSequence = new StringBuilder();
-        int counter = 0;
-        for (int i = 0; i < length; i++) {
-            originalSequence.append(uniqueNumbers[i]).append(i == length - 1 ? "\n" : " ");
-            changedSequence.append(uniqueNumbers[i]).append(i == length - 1 ? "" : " ");
-            counter++;
-            if (counter == amount) {
-                changedSequence.append("\n");
-                counter = 0;
-            }
-        }
-        StringBuilder resultSequence = new StringBuilder("В заданной границе [" + start + ", " + end + "] ");
-        resultSequence.append("создан массив из уникальных чисел:\n").append(originalSequence);
-        resultSequence.append("Печать массива с отображение ").append(amount).append(" чисел в строке:\n");
-        return resultSequence.append(changedSequence);
+        return uniqueNumbers;
     }
 
-    public static StringBuilder zeroer(int index) {
-        StringBuilder summaryMessage = new StringBuilder();
+    public static double[][] replaceGreaterThanAtIndex(int index) {
         int length = 15;
         if (index < 0 || index >= length) {
             Console.printInputError("некорректный индекс " + index);
             return null;
         }
 
-        double[] originalArray = new double[length];
+        double[][] array = new double[3][length];
         for (int i = 0; i < length; i++) {
-            originalArray[i] = Math.random();
+            array[0][i] = Math.random();
         }
 
-        double[] zeroedArray = java.util.Arrays.copyOf(originalArray, length);
-        StringBuilder originalMessage = new StringBuilder();
-        StringBuilder zeroedMessage = new StringBuilder();
-        int amount = 0;
+        array[1] = java.util.Arrays.copyOf(array[0], length);
         for (int i = 0; i < length; i++) {
-            if (zeroedArray[i] > zeroedArray[index]) {
-                zeroedArray[i] = 0.0;
-                amount++;
+            if (array[1][i] > array[1][index]) {
+                array[1][i] = 0.0;
+                array[2][0]++;
             }
         }
-        originalMessage.append("  Исходный массив:\n[");
-        zeroedMessage.append("\nИзмененный массив:\n[");
-        for (int i = 0; i < length; i++) {
-            if (i != 0 && i % 8 == 0) {
-                originalMessage.append("\n");
-                zeroedMessage.append("\n");
-            }
-            originalMessage.append(String.format("%.3f", originalArray[i]));
-            originalMessage.append(i != length - 1 ? " " : "]");
-            zeroedMessage.append(String.format("%.3f", zeroedArray[i]));
-            zeroedMessage.append(i != length - 1 ? " " : "]");
-        }
-        zeroedMessage.append("\nЗначение из ячейки по индексу ");
-        zeroedMessage.append(String.format("%d: %.3f", index, originalArray[index]));
-        zeroedMessage.append(String.format("\nКоличество обнуленных ячеек: %d\n", amount));
-        summaryMessage.append(originalMessage).append(zeroedMessage);
-        return summaryMessage;
-}
+        return array;
+    }
 
-private static boolean isNull(Object object) {
-    return object == null;
-}
+    public static int[] reverseNumbers(int[] original) {
+        if (original == null) {
+            Console.printArrayEmptyError(true);
+            return null;
+        }
+        int length = original.length;
+        int[] reversed = new int[length];
+        for (int i : original) {
+            reversed[--length] = i;
+        }
+        return reversed;
+    }
+
+    public static StringBuilder toUpperCaseShortestLongestWords(String originalText) throws InterruptedException {
+        if (originalText == null || originalText.isBlank()) {
+            return null;
+        }
+
+        String[] separatedText = originalText.split("[ \\t\\r]");
+        int shortestLen = 10;
+        int shortestIndex = 0;
+        int longestLen = 0;
+        int longestIndex = 0;
+        for (int i = 0; i < separatedText.length; i++) {
+            int wordLen = separatedText[i].replaceAll("\\p{P}", "").length();
+            if (wordLen == 0) {
+                continue;
+            }
+            shortestLen = Math.min(shortestLen, wordLen);
+            if (shortestLen == wordLen) {
+                shortestIndex = i;
+            }
+            longestLen = Math.max(longestLen, wordLen);
+            if (longestLen == wordLen) {
+                longestIndex = i;
+            }
+        }
+
+        StringBuilder mergedText = new StringBuilder();
+        for (int i = 0; i < separatedText.length; i++) {
+            if (i >= Math.min(shortestIndex, longestIndex) && i <= Math.max(shortestIndex, longestIndex)) {
+                mergedText.append(separatedText[i].toUpperCase());
+            } else {
+                mergedText.append(separatedText[i]);
+            }
+            mergedText.append(i == separatedText.length - 1 ? "" : " ");
+        }
+        return mergedText;
+    }
 }
