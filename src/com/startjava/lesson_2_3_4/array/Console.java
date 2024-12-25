@@ -32,26 +32,26 @@ public class Console {
         }
     }
 
-    static void printReplacedValueInfo(double[][] array, int index) {
-        if (array == null) {
+    static void printReplacedValueInfo(double[] original, double[] copy, int amount, int index) {
+        if (original == null || amount == -1) {
             return;
         }
         StringBuilder originalMessage = new StringBuilder("  Исходный массив:\n[");
         StringBuilder zeroedMessage = new StringBuilder("\nИзмененный массив:\n[");
-        int length = array[0].length;
+        int length = original.length;
         for (int i = 0; i < length; i++) {
             if (i != 0 && i % 8 == 0) {
                 originalMessage.append("\n");
                 zeroedMessage.append("\n");
             }
-            originalMessage.append(String.format("%.3f", array[0][i]));
+            originalMessage.append(String.format("%.3f", original[i]));
             originalMessage.append(i != length - 1 ? " " : "]");
-            zeroedMessage.append(String.format("%.3f", array[1][i]));
+            zeroedMessage.append(String.format("%.3f", copy[i]));
             zeroedMessage.append(i != length - 1 ? " " : "]");
         }
         zeroedMessage.append("\nЗначение из ячейки по индексу ");
-        zeroedMessage.append(String.format("%d: %.3f", index, array[0][index]));
-        zeroedMessage.append(String.format("\nКоличество обнуленных ячеек: %.0f\n", array[2][0]));
+        zeroedMessage.append(String.format("%d: %.3f", index, original[index]));
+        zeroedMessage.append(String.format("\nКоличество обнуленных ячеек: %d\n", amount));
         System.out.println(originalMessage.append(zeroedMessage));
     }
 

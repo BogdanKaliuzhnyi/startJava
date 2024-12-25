@@ -112,26 +112,26 @@ public class Arrays {
         return uniqueNumbers;
     }
 
-    public static double[][] replaceGreaterThanAtIndex(int index) {
+    public static int replaceGreaterThanAtIndex(double[] original, double[] copy, int index) {
         int length = 15;
         if (index < 0 || index >= length) {
             Console.printInputError("некорректный индекс " + index);
-            return null;
+            return -1;
         }
 
-        double[][] array = new double[3][length];
         for (int i = 0; i < length; i++) {
-            array[0][i] = Math.random();
+            original[i] = Math.random();
+            copy[i] = original[i];
         }
 
-        array[1] = java.util.Arrays.copyOf(array[0], length);
+        int amount = 0;
         for (int i = 0; i < length; i++) {
-            if (array[1][i] > array[1][index]) {
-                array[1][i] = 0.0;
-                array[2][0]++;
+            if (copy[i] > original[index]) {
+                copy[i] = 0.0;
+                amount++;
             }
         }
-        return array;
+        return amount;
     }
 
     public static int[] reverseNumbers(int[] original) {

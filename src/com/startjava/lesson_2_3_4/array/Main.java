@@ -55,14 +55,15 @@ public class Main {
         uniqueNumbers = Arrays.generateUniqueNumbers(5, -8, 2);
         Console.printUniqueNumbersArray(uniqueNumbers, 5, -8, 2);
 
-        double[][] zeroer = Arrays.replaceGreaterThanAtIndex(-1);
-        Console.printReplacedValueInfo(zeroer, -1);
-        zeroer = Arrays.replaceGreaterThanAtIndex(15);
-        Console.printReplacedValueInfo(zeroer, 15);
-        zeroer = Arrays.replaceGreaterThanAtIndex(0);
-        Console.printReplacedValueInfo(zeroer, 0);
-        Console.printReplacedValueInfo(zeroer, 0);
-        zeroer = Arrays.replaceGreaterThanAtIndex(14);
-        Console.printReplacedValueInfo(zeroer, 14);
+        double[] originals = new double[15];
+        double[] copy = new double[15];
+        int amount = Arrays.replaceGreaterThanAtIndex(originals, copy, -1);
+        Console.printReplacedValueInfo(originals, copy, amount, -1);
+        amount = Arrays.replaceGreaterThanAtIndex(originals, copy, 15);
+        Console.printReplacedValueInfo(originals, copy, amount, 15);
+        amount = Arrays.replaceGreaterThanAtIndex(originals, copy, 0);
+        Console.printReplacedValueInfo(originals, copy, amount, 0);
+        amount = Arrays.replaceGreaterThanAtIndex(originals, copy, 14);
+        Console.printReplacedValueInfo(originals, copy, amount, 14);
     }
 }
