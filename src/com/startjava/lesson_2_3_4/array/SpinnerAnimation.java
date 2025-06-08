@@ -6,18 +6,19 @@ public class SpinnerAnimation {
     public static final String ANSI_RED = "\u001B[31m";
 
     public static void main(String[] args) throws InterruptedException {
-        char[] loadingSymbols = new char[]{'-', '\\', '|', '/', '-'};
-        int randomChance = (int) (Math.random() * 100) + 1;
-        String access;
-        if (randomChance > 70) {
-            access = (ANSI_GREEN + "Access Granted!" + ANSI_RESET);
-        } else {
-            access= (ANSI_RED + "Access Denied!" + ANSI_RESET);
-        }
-        consoleWriter(loadingSymbols, access);
+        char[] loadingSymbols = {'-', '\\', '|', '/'};
+        printHackingStatus(loadingSymbols, generateAccess());
     }
 
-    public static void consoleWriter(char[] loadingSymbols, String access) throws InterruptedException {
+    public static String generateAccess() {
+        int randomChance = (int) (Math.random() * 100) + 1;
+        if (randomChance > 70) {
+            return (ANSI_GREEN + "Access Granted!" + ANSI_RESET);
+        }
+        return (ANSI_RED + "Access Denied!" + ANSI_RESET);
+    }
+
+    public static void printHackingStatus(char[] loadingSymbols, String access) throws InterruptedException {
         for (int i = 0; i < 3; i++) {
             for (char symbol : loadingSymbols) {
                 System.out.print("Hacking:  " + symbol);
@@ -25,6 +26,6 @@ public class SpinnerAnimation {
                 Thread.sleep(200);
             }
         }
-        System.out.println(access);
+        System.out.println("Hacking:  " + access);
     }
 }
