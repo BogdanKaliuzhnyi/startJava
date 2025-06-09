@@ -4,20 +4,34 @@ import java.util.Arrays;
 
 public class TransactionReverser {
     public static void main(String[] args) {
-        int[] original = new int[]{};
-        printResult(original, reverse(original));
+        int[] original = {};
+        printBothTransactions(original, reverse(original));
 
         original = null;
-        printResult(original, reverse(original));
+        printBothTransactions(original, reverse(original));
 
         original = new int[]{5};
-        printResult(original, reverse(original));
+        printBothTransactions(original, reverse(original));
 
         original = new int[]{6, 8, 9, 1};
-        printResult(original, reverse(original));
+        printBothTransactions(original, reverse(original));
 
         original = new int[]{13, 8, 5, 3, 2, 1, 1};
-        printResult(original, reverse(original));
+        printBothTransactions(original, reverse(original));
+    }
+
+    private static int[] reverse(int[] original) {
+        if (!hasElements(original)) {
+            return null;
+        }
+
+        int length = original.length;
+        int[] reversed = new int[length];
+        for (int i : original) {
+            reversed[--length] = i;
+        }
+
+        return reversed;
     }
 
     private static boolean hasElements(int[] original) {
@@ -34,26 +48,12 @@ public class TransactionReverser {
         return true;
     }
 
-    private static void printResult(int[] original, int[] reversed) {
+    private static void printBothTransactions(int[] original, int[] reversed) {
         if (reversed == null) {
             return;
         }
 
         System.out.println("Исходные транзакции: " + Arrays.toString(original));
         System.out.println(" В обратном порядке: " + Arrays.toString(reversed) + "\n");
-    }
-
-    private static int[] reverse(int[] original) {
-        if (!hasElements(original)) {
-            return null;
-        }
-
-        int length = original.length;
-        int[] reversed = new int[length];
-        for (int i : original) {
-            reversed[--length] = i;
-        }
-
-        return reversed;
     }
 }
