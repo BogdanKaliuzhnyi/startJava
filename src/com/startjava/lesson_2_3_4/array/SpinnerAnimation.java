@@ -6,10 +6,10 @@ public class SpinnerAnimation {
     public static final String ANSI_RED = "\u001B[31m";
 
     public static void main(String[] args) throws InterruptedException {
-        showAccess(isHacked());
+        printHackResult(isHacked());
     }
 
-    public static boolean isHacked() throws InterruptedException {
+    private static boolean isHacked() throws InterruptedException {
         char[] spins = {'-', '\\', '|', '/'};
         for (int i = 0; i < 3; i++) {
             for (char symbol : spins) {
@@ -21,12 +21,9 @@ public class SpinnerAnimation {
         return ((int) (Math.random() * 100) + 1) > 70;
     }
 
-    public static void showAccess(boolean isHacked) {
-        System.out.print("Hacking: ");
-        if (!isHacked) {
-            System.out.println(ANSI_RED + "Access Denied!" + ANSI_RESET);
-            return;
-        }
-        System.out.println(ANSI_GREEN + "Access Granted!" + ANSI_RESET);
+    private static void printHackResult(boolean isHacked) {
+
+        System.out.println(isHacked ? ANSI_RED + "Access Denied!" + ANSI_RESET :
+                ANSI_GREEN + "Access Granted!" + ANSI_RESET);
     }
 }
