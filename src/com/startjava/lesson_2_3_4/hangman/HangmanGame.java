@@ -36,7 +36,7 @@ class HangmanGame {
         remainingAttempts = gallows.length;
         movesCount = 0;
         mismatchesCount = 0;
-        usedLetters = new char[riddledLetters.length * 2 + remainingAttempts - 1];
+        usedLetters = new char[riddledLetters.length * 2 + remainingAttempts - 2];
         wrongLetters = new char[usedLetters.length];
     }
 
