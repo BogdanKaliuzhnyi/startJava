@@ -1,4 +1,5 @@
 package com.startjava.lesson_2_3_4.hangman;
+
 import java.util.Scanner;
 
 public class HangmanGameMain {
@@ -9,12 +10,12 @@ public class HangmanGameMain {
             if (answer.equalsIgnoreCase("yes")) {
                 HangmanGame game = new HangmanGame();
                 game.play(sc);
+                System.out.print("Хочешь сыграть ещё раз? Введи [yes / no]:");
             }
             answer = sc.nextLine().toLowerCase();
-            if (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
+            if (!answer.equals("yes") && !answer.equals("no")) {
                 System.out.print("Введите корректный ответ [yes / no]:");
             }
-
-        } while (!answer.equalsIgnoreCase("no"));
+        } while (!answer.equals("no"));
     }
 }

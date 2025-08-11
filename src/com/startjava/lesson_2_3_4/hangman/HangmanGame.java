@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 class HangmanGame {
     private final String[] gallows =
-            {"_______",
-                    "|     |",
-                    "|     @",
-                    "|    /|\\",
-                    "|    / \\",
-                    "| GAME OVER!"
-            };
+      {"_______",
+            "|     |",
+            "|     @",
+            "|    /|\\",
+            "|    / \\",
+            "| GAME OVER!"
+      };
     private final String[] guessWords = {"ДРУЖБА", "АВТОМОБИЛЬ", "ГИТАРА", "МОРКОВЬ", "КОСМОС"};
 
     private enum Statuses {
@@ -36,8 +36,8 @@ class HangmanGame {
         remainingAttempts = gallows.length;
         movesCount = 0;
         mismatchesCount = 0;
-        usedLetters = new char[riddledLetters.length * 3];
-        wrongLetters = new char[riddledLetters.length * 3];
+        usedLetters = new char[riddledLetters.length * 2 + remainingAttempts - 1];
+        wrongLetters = new char[usedLetters.length];
     }
 
     private char[] randomizeWord() {
@@ -71,7 +71,6 @@ class HangmanGame {
         displayTurnInfo();
         System.out.println((remainingAttempts == 0 ? "\nК сожалению, ты проиграл"
                 : "\nПобеда! Ты отгадал слово"));
-        System.out.print("Хочешь сыграть ещё раз? Введи [yes / no]:");
     }
 
     private void displayTurnInfo() {
