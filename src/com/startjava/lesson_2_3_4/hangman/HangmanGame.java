@@ -34,8 +34,6 @@ class HangmanGame {
         riddledLetters = randomizeWord();
         hiddenRiddledWord = createMask(riddledLetters);
         remainingAttempts = gallows.length;
-        movesCount = 0;
-        mismatchesCount = 0;
         wrongLetters = new char[riddledLetters.length + remainingAttempts - 1];
         usedLetters = new char[riddledLetters.length + wrongLetters.length - 1];
     }

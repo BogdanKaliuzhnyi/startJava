@@ -1,5 +1,6 @@
 package com.startjava.lesson_2_3_4.calculator;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class CalculatorTest {
@@ -10,7 +11,12 @@ public class CalculatorTest {
         do {
             if (answer.equals("yes")) {
                 Calculator calculator = new Calculator();
-                calculator.startCalculating(sc);
+                String expression = sc.nextLine();
+                double result = calculator.calculate(expression);
+                if (!Double.isNaN(result)) {
+                    System.out.println(expression + " = " + new DecimalFormat("#.###").format(result));
+                }
+
                 System.out.print("Хотите продолжить вычисления? [yes / no]: ");
             }
             answer = sc.nextLine();
