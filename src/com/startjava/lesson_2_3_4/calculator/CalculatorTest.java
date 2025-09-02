@@ -12,11 +12,7 @@ public class CalculatorTest {
             if (answer.equals("yes")) {
                 Calculator calculator = new Calculator();
                 String expression = sc.nextLine();
-                double result = calculator.calculate(expression);
-                if (!Double.isNaN(result)) {
-                    System.out.println(expression + " = " + new DecimalFormat("#.###").format(result));
-                }
-
+                printExpressionResult(expression, calculator.calculate(expression));
                 System.out.print("Хотите продолжить вычисления? [yes / no]: ");
             }
             answer = sc.nextLine();
@@ -24,5 +20,11 @@ public class CalculatorTest {
                 System.out.print("Введите корректный ответ [yes / no]: ");
             }
         } while (!answer.equals("no"));
+    }
+
+    private static void printExpressionResult(String expression, double result) {
+        if (!Double.isNaN(result)) {
+            System.out.println(expression + " = " + new DecimalFormat("#.###").format(result));
+        }
     }
 }
