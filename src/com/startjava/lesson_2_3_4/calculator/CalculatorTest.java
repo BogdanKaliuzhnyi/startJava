@@ -8,23 +8,26 @@ public class CalculatorTest {
         Scanner sc = new Scanner(System.in);
         String answer = "yes";
 
-        do {
-            if (answer.equals("yes")) {
-                Calculator calculator = new Calculator();
+        while (!"no".equalsIgnoreCase(answer)) {
+            if ("yes".equalsIgnoreCase(answer)) {
+                System.out.print("Введите выражение из трех аргументов, например, 2 ^ 10: ");
                 String expression = sc.nextLine();
-                printExpressionResult(expression, calculator.calculate(expression));
+                try {
+                    printCalculationResult(expression, Calculator.calculate(expression));
+                } catch (Calculator.CalculatorException e) {
+                    System.out.println(e.getMessage());
+                }
                 System.out.print("Хотите продолжить вычисления? [yes / no]: ");
             }
+
             answer = sc.nextLine();
-            if (!answer.equals("yes") && !answer.equals("no")) {
+            if (!"yes".equalsIgnoreCase(answer) && !"no".equalsIgnoreCase(answer)) {
                 System.out.print("Введите корректный ответ [yes / no]: ");
             }
-        } while (!answer.equals("no"));
+        }
     }
 
-    private static void printExpressionResult(String expression, double result) {
-        if (!Double.isNaN(result)) {
-            System.out.println(expression + " = " + new DecimalFormat("#.###").format(result));
-        }
+    private static void printCalculationResult(String expression, double result) {
+        System.out.println(expression + " = " + new DecimalFormat("#.###").format(result));
     }
 }
