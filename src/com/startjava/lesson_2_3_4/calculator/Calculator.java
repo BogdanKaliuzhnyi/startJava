@@ -1,18 +1,19 @@
 package com.startjava.lesson_2_3_4.calculator;
 
 public class Calculator {
-    private static final int EXPRESSION_LENGTH = 3;
+    private static final int EXPR_LENGTH = 3;
+    private static final int SIGN_LENGTH = 1;
 
     private Calculator() {
     }
 
-    public static double calculate(String expression) {
-        String[] splitExpression = expression.trim().split("[\\s]+");
-        validateExpLength(splitExpression);
+    public static double calculate(String expr) {
+        String[] splitExpr = expr.split(" ");
+        validateExprLength(splitExpr);
 
-        int a = getNumber(splitExpression[0]);
-        int b = getNumber(splitExpression[2]);
-        char sign = getSign(splitExpression[1]);
+        int a = parseNumber(splitExpr[0]);
+        int b = parseNumber(splitExpr[2]);
+        char sign = splitExpr[1].charAt(0);
         return switch (sign) {
             case '-' -> a - b;
             case '+' -> a + b;
@@ -20,44 +21,31 @@ public class Calculator {
             case '^' -> Math.pow(a, b);
             case '/', '%' -> {
                 if (b == 0) {
-                    throw new CalculatorException("Ошибка: деление на 0");
+                    throw new IllegalArgumentException("Ошибка: деление на 0");
                 }
-                yield sign == '/' ? ((double) a / (double) b) : Math.IEEEremainder(a, b);
+                yield sign == '/' ? ((double) a / b) : Math.IEEEremainder(a, b);
             }
-            default -> throw new CalculatorException("Ошибка: " + sign + " дал неожиданный результат");
+            default -> throw new UnexpectedInputException("Ошибка: " + sign + " не является символом " +
+                    "арифметической операции, поддерживаемый программой");
         };
     }
 
-    private static void validateExpLength(String[] splitExp) {
-        if (splitExp.length != EXPRESSION_LENGTH) {
-            throw new CalculatorException("\nОшибка: введенные данные не соответствуют установленному формату " +
+    private static void validateExprLength(String[] splitExp) {
+        if (splitExp.length != EXPR_LENGTH) {
+            throw new UnexpectedInputException("\nОшибка: введенные данные не соответствуют установленному формату " +
                     "\"Число_Пробел_ЗнакМатематическойОперации_Пробел_Число\"");
+        }
+
+        if (splitExp[1].length() != SIGN_LENGTH) {
+            throw new UnexpectedInputException("\nОшибка: операция " + splitExp[1] + " не поддерживается");
         }
     }
 
-    private static int getNumber(String s) {
-        if (s.matches("(\\d\\.\\d)|(\\d,\\d)")) {
-            throw new CalculatorException("Ошибка: вещественные числа не поддерживаются программой");
-        }
-
+    private static int parseNumber(String s) {
         try {
             return Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            throw new CalculatorException("Ошибка: " + s + " не является числом");
-        }
-    }
-
-    private static char getSign(String s) {
-        if (s.matches("[+\\-*/^%]")) {
-            return s.charAt(0);
-        }
-        throw new CalculatorException("Ошибка: " + s + " не является символом арифметической операции, " +
-                "поддерживаемый программой");
-    }
-
-    static class CalculatorException extends RuntimeException {
-        private CalculatorException(String message) {
-            super(message);
+            throw new NumberFormatException("Ошибка: введен неподдерживаемый операнд" + s);
         }
     }
 }
