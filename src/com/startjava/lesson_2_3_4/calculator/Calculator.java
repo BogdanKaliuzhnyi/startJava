@@ -32,8 +32,8 @@ public class Calculator {
 
     private static void validateExprLength(String[] splitExp) {
         if (splitExp.length != EXPR_LENGTH) {
-            throw new UnexpectedInputException("\nОшибка: введенные данные не соответствуют установленному формату " +
-                    "\"Число_Пробел_ЗнакМатематическойОперации_Пробел_Число\"");
+            throw new UnexpectedInputException("\nОшибка: введенные данные не соответствуют установленному " +
+                    "формату: \"Число_Пробел_ЗнакМатематическойОперации_Пробел_Число\"");
         }
 
         if (splitExp[1].length() != SIGN_LENGTH) {
