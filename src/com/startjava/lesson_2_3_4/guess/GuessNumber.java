@@ -15,32 +15,54 @@ public class GuessNumber {
     }
 
     public void play() {
-        startNewGame(player1, player2);
+        clearPlayers();
+        initRound();
         Scanner sc = new Scanner(System.in);
         do {
             displayTurnInfo(player1);
             inputNumber(player1, sc);
-            if (isGuessed(player1)) {
+            boolean isLastTurn = isGuessed(player1);
+            if (isLastTurn) {
+                displayGameEnd(isLastTurn, player1);
+                displayEnteredNumbers(player1, player2);
                 break;
             }
+            if (player1.getCurrAttempt() == ATTEMPTS) {
+                displayGameEnd(isLastTurn, player1);
+            }
+            System.out.println("Ход переходит к другому игроку\n");
             displayTurnInfo(player2);
             inputNumber(player2, sc);
-        } while (!isGuessed(player2));
+            isLastTurn = isGuessed(player2);
+            if (isLastTurn || player2.getCurrAttempt() == ATTEMPTS) {
+                displayGameEnd(isLastTurn, player2);
+                displayEnteredNumbers(player1, player2);
+                break;
+            }
+        } while (true);
     }
 
-    private void startNewGame(Player player1, Player player2) {
-        player1.resetFields();
-        player2.resetFields();
+    private void clearPlayers() {
+        player1.clear();
+        player2.clear();
+    }
+
+    private void initRound() {
         System.out.println("Игра началась! У каждого игрока по " + ATTEMPTS + " попыток");
         magicNumber = ThreadLocalRandom.current().nextInt(100) + 1;
-        System.out.println("Загадано число от 1 до 100, попробуйте его угадать");
+        System.out.println("Загадано число от 1 до 100, попробуйте его угадать\n");
+    }
+
+    private void displayTurnInfo(Player player) {
+        System.out.println("Попытка " + (player.getCurrAttempt() + 1));
+        System.out.print("Число вводит " + player.getName() + ":");
     }
 
     private void inputNumber(Player player, Scanner sc) {
-        player.nextTurn();
+        player.incrementCurrAttempt();
         while (true) {
             try {
-                player.setNumber(sc.nextInt());
+                player.addNumber(sc.nextInt());
                 return;
             } catch (IllegalArgumentException e) {
                 System.out.print(e.getMessage());
@@ -49,51 +71,34 @@ public class GuessNumber {
     }
 
     private boolean isGuessed(Player player) {
-        if (player.getNumber() == magicNumber) {
-            displayGameEnd(true, player);
-            displayUsedNumbers(player1, player2);
+        if (player.getLastNumber() == magicNumber) {
             return true;
         }
-        System.out.println("\n" + player.getNumber() + (player.getNumber() > magicNumber ? " больше " : " меньше ") +
+        System.out.println(player.getLastNumber() + (player.getLastNumber() > magicNumber ? " больше " : " меньше ") +
                 "того, что загадал компьютер");
-        if (player.getTurn() == ATTEMPTS) {
-            displayGameEnd(false, player);
-            if (player == player2) {
-                return true;
-            }
-        }
-        System.out.println("Ход переходит к другому игроку\n");
         return false;
-    }
-
-    private void displayTurnInfo(Player player) {
-        System.out.println("Попытка " + (player.getTurn() + 1));
-        System.out.print("Число вводит " + player.getName() + ":");
     }
 
     private void displayGameEnd(boolean isGuessed, Player player) {
         if (isGuessed) {
             System.out.println("\n" + player.getName() + " угадал число " + magicNumber +
-                    " с " + player.getTurn() + " попытки");
+                    " с " + player.getCurrAttempt() + " попытки");
             return;
         }
         System.out.println("У " + player.getName() + " закончились попытки!");
 
         if (player == player2) {
             System.out.println("\nИгра окончена. Никто не угадал число " + magicNumber);
-            displayUsedNumbers(player1, player2);
         }
     }
 
-    private void displayUsedNumbers(Player player1, Player player2) {
-        System.out.print(player1.getName() + " использовал числа:");
-        for (int i : player1.getUsedNumbers()) {
-            System.out.print(" " + i);
-        }
-
-        System.out.print("\n" + player2.getName() + " использовал числа:");
-        for (int i : player2.getUsedNumbers()) {
-            System.out.print(" " + i);
+    private void displayEnteredNumbers(Player... players) {
+        for (Player p : players) {
+            System.out.print(p.getName() + " использовал числа:");
+            for (int i : p.getEnteredNumbers()) {
+                System.out.print(" " + i);
+            }
+            System.out.println();
         }
     }
 }

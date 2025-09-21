@@ -4,47 +4,44 @@ import java.util.Arrays;
 
 public class Player {
     private String name;
-    private int number;
-    private int turn;
-    private int[] usedNumbers;
+    private int currAttempt;
+    private int[] enteredNumbers;
 
     Player(String name) {
         this.name = name;
-        usedNumbers = new int[GuessNumber.ATTEMPTS];
+        enteredNumbers = new int[GuessNumber.ATTEMPTS];
     }
 
     public String getName() {
         return name;
     }
 
-    public int getNumber() {
-        return number;
+    public int getLastNumber() {
+        return enteredNumbers[currAttempt - 1];
     }
 
-    public void setNumber(int number) {
+    public void addNumber(int number) {
         if (number < 1 || number > 100) {
             throw new IllegalArgumentException("Число должно входить в отрезок [1, 100]." +
                     "\nПопробуйте еще раз:");
         }
-        this.number = number;
-        usedNumbers[turn - 1] = number;
+        enteredNumbers[currAttempt - 1] = number;
     }
 
-    public int getTurn() {
-        return turn;
+    public int getCurrAttempt() {
+        return currAttempt;
     }
 
-    public void nextTurn() {
-        turn++;
+    public void incrementCurrAttempt() {
+        currAttempt++;
     }
 
-    public int[] getUsedNumbers() {
-        return Arrays.copyOf(usedNumbers, turn);
+    public int[] getEnteredNumbers() {
+        return Arrays.copyOf(enteredNumbers, currAttempt);
     }
 
-    public void resetFields() {
-        Arrays.fill(usedNumbers, 0, turn, 0);
-        turn = 0;
-        number = 0;
+    public void clear() {
+        Arrays.fill(enteredNumbers, 0, currAttempt, 0);
+        currAttempt = 0;
     }
 }
