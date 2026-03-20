@@ -5,8 +5,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GuessNumber {
     static final int ATTEMPTS = 10;
-    static final int ROUNDS_AMOUNT = 3;
-    private int currentRound;
+    static final int MIN_NUMBER = 1;
+    static final int MAX_NUMBER = 100;
+    private static final int ROUNDS_AMOUNT = 3;
+    private int currRound;
     private int magicNumber;
     private final Player[] players;
     private final Scanner scanner;
@@ -14,22 +16,23 @@ public class GuessNumber {
     GuessNumber(Player[] players, Scanner scanner) {
         this.players = players;
         this.scanner = scanner;
+        currRound = 1;
     }
 
-    public void play() throws InterruptedException {
-        initiateGame();
+    public void play() {
+        initGame();
         do {
             playNewRound();
-        } while (currentRound <= ROUNDS_AMOUNT);
+        } while (currRound <= ROUNDS_AMOUNT);
         determineWinner();
     }
 
-    private void initiateGame() throws InterruptedException {
+    private void initGame() {
         clearPlayersWins();
-        setPlayersOrder(players);
-        currentRound = 1;
-        System.out.println("Игра началась! Победитель определяется по итогам проведения " + ROUNDS_AMOUNT + " раундов");
-        System.out.println("У каждого игрока по " + ATTEMPTS + " попыток в раунде");
+        shufflePlayersOrder(players);
+        System.out.printf("""
+                Игра началась! Победитель определяется по итогам проведения %d раундов
+                У каждого игрока по %d попыток в раунде""", ROUNDS_AMOUNT, ATTEMPTS);
     }
 
     private void clearPlayersWins() {
@@ -38,7 +41,7 @@ public class GuessNumber {
         }
     }
 
-    private void setPlayersOrder(Player[] players) throws InterruptedException {
+    private void shufflePlayersOrder(Player[] players) {
         for (int i = players.length - 1; i > 0; i--) {
             int j = ThreadLocalRandom.current().nextInt(i + 1);
             Player temp = players[i];
@@ -46,12 +49,13 @@ public class GuessNumber {
             players[j] = temp;
         }
 
-        char[] spins = {'-', '\\', '|', '/'};
-        for (int i = 0; i < 3; i++) {
-            for (char symbol : spins) {
-                System.out.print("Определяется очередность: " + symbol);
-                System.out.print('\r');
-                Thread.sleep(200);
+        char[] spins = {'—', '\\', '|', '/'};
+        for (int i = 0; i < spins.length * 3; i++) {
+            System.out.print("Определяется очередность: " + spins[i % spins.length] + '\r');
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -62,25 +66,19 @@ public class GuessNumber {
     }
 
     private void playNewRound() {
-        initiateRound();
+        initRound();
         boolean isGuessed = false;
         for (int i = 0; i < ATTEMPTS && !isGuessed; i++) {
-            for (int j = 0; j < players.length; j++) {
-                Player p = players[j];
+            for (Player p : players) {
                 displayTurnInfo(p);
                 inputNumber(p);
-                if (isGuessed(p)) {
-                    showRoundEnding(p);
-                    isGuessed = true;
+                isGuessed = isGuessed(p);
+                showGuessingResult(p, isGuessed);
+                if (isGuessed) {
                     break;
                 }
-
                 if (p.getCurrAttempt() == ATTEMPTS) {
                     System.out.println("У " + p.getName() + " закончились попытки!");
-                }
-
-                if (j < players.length - 1) {
-                    System.out.println("Ход переходит к другому игроку");
                 }
             }
         }
@@ -91,11 +89,11 @@ public class GuessNumber {
         displayEnteredNumbers();
     }
 
-    private void initiateRound() {
+    private void initRound() {
         clearPlayersAttempts();
-        magicNumber = ThreadLocalRandom.current().nextInt(100) + 1;
-        System.out.println("\nРаунд " + currentRound++);
-        System.out.println("Загадано число от 1 до 100, попробуйте его угадать");
+        magicNumber = ThreadLocalRandom.current().nextInt(MIN_NUMBER, MAX_NUMBER + 1);
+        System.out.println("\nРаунд " + currRound++);
+        System.out.printf("Загадано число от %d до %d, попробуйте его угадать %n", MIN_NUMBER, MAX_NUMBER);
     }
 
     private void clearPlayersAttempts() {
@@ -114,28 +112,31 @@ public class GuessNumber {
             try {
                 player.addNumber(scanner.nextInt());
                 scanner.nextLine();
-                player.increaseCurrAttempt();
                 return;
             } catch (IllegalArgumentException e) {
                 System.out.print(e.getMessage());
+                System.out.println("\nПопробуйте еще раз: ");
             }
         }
     }
 
     private boolean isGuessed(Player player) {
-        int lastNumber = player.getLastNumber();
-        if (lastNumber == magicNumber) {
+        boolean guessed = player.getLastNumber() == magicNumber;
+        if (guessed) {
             player.increaseWins();
-            return true;
         }
-        System.out.println(lastNumber + (lastNumber > magicNumber ? " больше " : " меньше ") +
-                "того, что загадал компьютер");
-        return false;
+        return guessed;
     }
 
-    private void showRoundEnding(Player player) {
-        System.out.println("\n" + player.getName() + " угадал число " + magicNumber +
-                " c " + player.getCurrAttempt() + "-й попытки");
+    private void showGuessingResult(Player player, boolean isGuessed) {
+        if (isGuessed) {
+            System.out.println("\n" + player.getName() + " угадал число " + magicNumber +
+                    " c " + player.getCurrAttempt() + "-й попытки");
+            return;
+        }
+        int lastNumber = player.getLastNumber();
+        System.out.println(lastNumber + (lastNumber > magicNumber ? " больше " : " меньше ") +
+                "того, что загадал компьютер");
     }
 
     private void displayEnteredNumbers() {
