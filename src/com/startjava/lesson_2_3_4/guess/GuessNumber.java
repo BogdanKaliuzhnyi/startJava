@@ -4,14 +4,16 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GuessNumber {
+    private static final int ROUNDS_AMOUNT = 3;
     static final int ATTEMPTS = 10;
     static final int MIN_NUMBER = 1;
     static final int MAX_NUMBER = 100;
-    private static final int ROUNDS_AMOUNT = 3;
-    private int currRound;
-    private int magicNumber;
+
     private final Player[] players;
     private final Scanner scanner;
+
+    private int currRound;
+    private int magicNumber;
 
     GuessNumber(Player[] players, Scanner scanner) {
         this.players = players;
@@ -73,7 +75,6 @@ public class GuessNumber {
                 displayTurnInfo(p);
                 inputNumber(p);
                 isGuessed = isGuessed(p);
-                showGuessingResult(p, isGuessed);
                 if (isGuessed) {
                     break;
                 }
@@ -123,20 +124,14 @@ public class GuessNumber {
     private boolean isGuessed(Player player) {
         boolean guessed = player.getLastNumber() == magicNumber;
         if (guessed) {
-            player.increaseWins();
-        }
-        return guessed;
-    }
-
-    private void showGuessingResult(Player player, boolean isGuessed) {
-        if (isGuessed) {
             System.out.println("\n" + player.getName() + " угадал число " + magicNumber +
                     " c " + player.getCurrAttempt() + "-й попытки");
-            return;
+            player.increaseWins();
         }
         int lastNumber = player.getLastNumber();
         System.out.println(lastNumber + (lastNumber > magicNumber ? " больше " : " меньше ") +
                 "того, что загадал компьютер");
+        return guessed;
     }
 
     private void displayEnteredNumbers() {

@@ -2,10 +2,13 @@ package com.startjava.lesson_2_3_4.guess;
 
 import java.util.Arrays;
 
+import static com.startjava.lesson_2_3_4.guess.GuessNumber.*;
+
 public class Player {
     private final String name;
-    private int currAttempt;
     private final int[] enteredNumbers;
+
+    private int currAttempt;
     private int wins;
 
     Player(String name) {
@@ -26,12 +29,11 @@ public class Player {
     }
 
     public void addNumber(int number) {
-        if (number < GuessNumber.MIN_NUMBER || number > GuessNumber.MAX_NUMBER) {
+        if (number < MIN_NUMBER || number > MAX_NUMBER) {
             throw new IllegalArgumentException("Число должно входить в отрезок " +
-                    "[" + GuessNumber.MIN_NUMBER + ", " + GuessNumber.MAX_NUMBER + "].");
+                    "[" + MIN_NUMBER + ", " + MAX_NUMBER + "].");
         }
-        enteredNumbers[currAttempt] = number;
-        currAttempt++;
+        enteredNumbers[currAttempt++] = number;
     }
 
     public int[] getEnteredNumbers() {
