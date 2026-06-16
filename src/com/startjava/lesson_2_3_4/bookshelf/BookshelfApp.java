@@ -6,8 +6,10 @@ import java.util.Scanner;
 
 public class BookshelfApp {
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final int MIN_MENU_ITEM = 1;
+    private static final int MAX_MENU_ITEM = 5;
+
     private final Bookshelf bookshelf = new Bookshelf();
-    private int maxShelfWidth;
 
     public void run() {
         showIntroduction();
@@ -70,7 +72,6 @@ public class BookshelfApp {
     }
 
     private int chooseMenuCommand() {
-        int choice;
         while (true) {
             printMessage("Выберите команду: ");
             String input = SCANNER.nextLine();
@@ -79,8 +80,8 @@ public class BookshelfApp {
                 continue;
             }
 
-            choice = Integer.parseInt(input);
-            if (choice < 1 || choice > 5) {
+            int choice = Integer.parseInt(input);
+            if (choice < MIN_MENU_ITEM || choice > MAX_MENU_ITEM) {
                 printInputError("неверное значение меню (" + choice + "). Допустимые значения: 1-5");
                 continue;
             }
@@ -90,7 +91,7 @@ public class BookshelfApp {
 
     private void showBookshelf() {
         Book[] books = bookshelf.getAllBooks();
-        int shelfWidth = maxShelfWidth;
+        int shelfWidth = bookshelf.getMaxShelvesAmount();
         for (int i = 0; i < bookshelf.getBooksCount(); i++) {
             String currentBook = books[i].toString();
             System.out.println("|" + currentBook + " ".repeat(shelfWidth - currentBook.length()) + "|");
@@ -117,11 +118,11 @@ public class BookshelfApp {
         printAddBookParameter("наименование");
         String title = SCANNER.nextLine();
         printAddBookParameter("год издания");
-        Year publicationYear;
+        Year publishedYear;
         while (true) {
             try {
-                publicationYear = parsePublicationYear(SCANNER.nextLine());
-                if (publicationYear == null) {
+                publishedYear = parsePublishedYear(SCANNER.nextLine());
+                if (publishedYear == null) {
                     printInputError("год издания должен быть между 1800 и текущим\nПопробуйте еще раз: ");
                     continue;
                 }
@@ -133,7 +134,7 @@ public class BookshelfApp {
 
         boolean isAdded;
         try {
-            Book book = new Book(author, title, publicationYear);
+            Book book = new Book(author, title, publishedYear);
             isAdded = bookshelf.addBook(book);
         } catch (IllegalArgumentException e) {
             printInputError("Ошибка! " + e.getMessage());
@@ -141,14 +142,13 @@ public class BookshelfApp {
         }
 
         if (isAdded) {
-            printMessage("Добавлена книга: \"" + author + ", " + title + ", " + publicationYear + "\"\n");
-            maxShelfWidth = calculateMaxShelfWidth();
+            printMessage("Добавлена книга: \"" + author + ", " + title + ", " + publishedYear + "\"\n");
         } else {
             printInputError("В шкафу нет свободного места. Книга не была добавлена");
         }
     }
 
-    private Year parsePublicationYear(String yearAsString) {
+    private Year parsePublishedYear(String yearAsString) {
         Year year = Year.of(Integer.parseInt(yearAsString));
         if ((year.isBefore(Year.now()) || year.equals(Year.now())) && (year.isAfter(Year.of(1799)))) {
             return year;
@@ -168,7 +168,6 @@ public class BookshelfApp {
     private void removeBook() {
         if (bookshelf.removeBook(askBookTitle())) {
             printMessage("Книга успешно удалена\n");
-            maxShelfWidth = calculateMaxShelfWidth();
             return;
         }
         printInputError("книга с таким наименованием не найдена на полках шкафа");
@@ -176,7 +175,6 @@ public class BookshelfApp {
 
     private void clearBookshelf() {
         bookshelf.clear();
-        maxShelfWidth = 0;
         System.out.println("Шкаф очищен");
     }
 
@@ -195,17 +193,5 @@ public class BookshelfApp {
 
     private void printAddBookParameter(String message) {
         System.out.print("Введите " + message + " книги: ");
-    }
-
-    private int calculateMaxShelfWidth() {
-        int maxLength = 0;
-        Book[] books = bookshelf.getAllBooks();
-        for (Book book : books) {
-            if (book == null) {
-                return maxLength;
-            }
-            maxLength = Math.max(maxLength, book.toString().length());
-        }
-        return maxLength;
     }
 }

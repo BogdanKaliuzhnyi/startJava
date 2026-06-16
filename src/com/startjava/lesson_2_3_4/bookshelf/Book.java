@@ -5,15 +5,22 @@ import java.time.Year;
 public class Book {
     private final String author;
     private final String title;
-    private final Year publicationYear;
+    private final Year publishedYear;
 
-    public Book(String author, String title, Year publicationYear) {
-        this.author = validateStringField(author, "<Автор>");
-        this.title = validateStringField(title, "<Название>");
-        if (publicationYear == null) {
+    public Book(String author, String title, Year publishedYear) {
+        this.author = throwIfInvalid(author, "<Автор>");
+        this.title = throwIfInvalid(title, "<Название>");
+        if (publishedYear == null) {
             throw new IllegalArgumentException("Год издания не может быть null");
         }
-        this.publicationYear = publicationYear;
+        this.publishedYear = publishedYear;
+    }
+
+    private String throwIfInvalid(String value, String fieldName) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(fieldName + " не может быть null или пустым");
+        }
+        return value;
     }
 
     public String getTitle() {
@@ -21,13 +28,6 @@ public class Book {
     }
 
     public String toString() {
-        return author + ", " + title + ", " + publicationYear;
-    }
-
-    private String validateStringField(String value, String fieldName) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Поле " + fieldName + " не может быть null или пустым");
-        }
-        return value;
+        return author + ", " + title + ", " + publishedYear;
     }
 }

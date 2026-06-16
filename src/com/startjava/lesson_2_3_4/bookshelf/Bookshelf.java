@@ -3,46 +3,10 @@ package com.startjava.lesson_2_3_4.bookshelf;
 import java.util.Arrays;
 
 public class Bookshelf {
-    private static final int BOOKSHELF_CAPACITY = 10;
-    private Book[] books = new Book[BOOKSHELF_CAPACITY];
+    private static final int CAPACITY = 10;
+    private final Book[] books = new Book[CAPACITY];
     private int booksCount;
-
-    public boolean addBook(Book book) {
-        if (booksCount < BOOKSHELF_CAPACITY) {
-            books[booksCount++] = book;
-            return true;
-        }
-        return false;
-    }
-
-    public Book findBook(String title) {
-        int bookIndex = findBookIndex(title);
-        if (bookIndex == -1) {
-            return null;
-        }
-        return books[bookIndex];
-    }
-
-    public boolean removeBook(String title) {
-        int bookIndex = findBookIndex(title);
-        if (bookIndex == -1) {
-            return false;
-        }
-
-        if (bookIndex < booksCount - 1) {
-            System.arraycopy(books, bookIndex + 1, books, bookIndex, booksCount - bookIndex - 1);
-            books[booksCount - 1] = null;
-        } else {
-            books[bookIndex] = null;
-        }
-        booksCount--;
-        return true;
-    }
-
-    public void clear() {
-        books = new Book[BOOKSHELF_CAPACITY];
-        booksCount = 0;
-    }
+    private int maxShelfWidth;
 
     public Book[] getAllBooks() {
         return Arrays.copyOf(books, booksCount);
@@ -53,15 +17,61 @@ public class Bookshelf {
     }
 
     public int getFreeShelvesAmount() {
-        return BOOKSHELF_CAPACITY - booksCount;
+        return CAPACITY - booksCount;
+    }
+
+    public int getMaxShelvesAmount() {
+        return maxShelfWidth;
+    }
+
+    public boolean addBook(Book book) {
+        if (booksCount < CAPACITY) {
+            books[booksCount++] = book;
+            calculateMaxShelfWidth();
+            return true;
+        }
+        return false;
+    }
+
+    public Book findBook(String title) {
+        int bookIndex = findBookIndex(title);
+        return bookIndex == -1 ? null : books[bookIndex];
+    }
+
+    public boolean removeBook(String title) {
+        int bookIndex = findBookIndex(title);
+        if (bookIndex == -1) {
+            return false;
+        }
+
+        System.arraycopy(books, bookIndex + 1, books, bookIndex, booksCount - bookIndex - 1);
+        books[booksCount - 1] = null;
+        booksCount--;
+        calculateMaxShelfWidth();
+        return true;
+    }
+
+    public void clear() {
+        Arrays.fill(books, null);
+        calculateMaxShelfWidth();
+        booksCount = 0;
     }
 
     private int findBookIndex(String title) {
         for (int i = 0; i < booksCount; i++) {
-            if (title != null || title.equalsIgnoreCase(books[i].getTitle())) {
+            if (title != null && title.equalsIgnoreCase(books[i].getTitle())) {
                 return i;
             }
         }
         return -1;
+    }
+
+    private void calculateMaxShelfWidth() {
+        for (Book book : books) {
+            if (book == null) {
+                return;
+            }
+            maxShelfWidth = Math.max(maxShelfWidth, book.toString().length());
+        }
     }
 }
