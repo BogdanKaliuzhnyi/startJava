@@ -8,6 +8,7 @@ public class BookshelfApp {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final int MIN_MENU_ITEM = 1;
     private static final int MAX_MENU_ITEM = 5;
+    private static final int MIN_ALLOWED_YEAR = 1799;
 
     private final Bookshelf bookshelf = new Bookshelf();
 
@@ -35,7 +36,7 @@ public class BookshelfApp {
         }
     }
 
-    private static void showIntroduction() {
+    private void showIntroduction() {
         String text = """
                 Добро пожаловать в книжный шкаф!
                 На полках шкафа может храниться до 10 книг одновременно
@@ -43,23 +44,23 @@ public class BookshelfApp {
         for (char c : text.toCharArray()) {
             System.out.print(c);
             try {
-                Thread.sleep(2);
+                Thread.sleep(2); // Сюда вернутся
             } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+                printMessage(e.getMessage());
             }
         }
     }
 
-    private static void showBookshelfStatistics(int books, int shelves) {
+    private void showBookshelfStatistics(int books, int shelves) {
         if (books == 0) {
-            System.out.println("Шкаф пуст. Вы можете добавить в него первую книгу");
+            printMessage("Шкаф пуст. Вы можете добавить в него первую книгу");
             return;
         }
         System.out.printf("В шкафу книг - %d, свободно полок - %d\n\n", books, shelves);
     }
 
-    private static void showMenu() {
-        System.out.print("""
+    private void showMenu() {
+        printMessage("""
                 
                 Для продолжения, выберите пункт меню:
                 1. Добавить книгу
@@ -82,7 +83,8 @@ public class BookshelfApp {
 
             int choice = Integer.parseInt(input);
             if (choice < MIN_MENU_ITEM || choice > MAX_MENU_ITEM) {
-                printInputError("неверное значение меню (" + choice + "). Допустимые значения: 1-5");
+                printInputError("неверное значение меню (" + choice + "). " +
+                        "Допустимые значения: " + MIN_MENU_ITEM + "-" + MAX_MENU_ITEM);
                 continue;
             }
             return choice;
@@ -91,13 +93,12 @@ public class BookshelfApp {
 
     private void showBookshelf() {
         Book[] books = bookshelf.getAllBooks();
-        int shelfWidth = bookshelf.getMaxShelvesAmount();
-        for (int i = 0; i < bookshelf.getBooksCount(); i++) {
-            String currentBook = books[i].toString();
-            System.out.println("|" + currentBook + " ".repeat(shelfWidth - currentBook.length()) + "|");
-            System.out.println("|" + "-".repeat(shelfWidth) + "|");
+        int shelvesWidth = bookshelf.getShelvesWidth();
+        for (Book book : books) {
+            printMessage("|" + book + " ".repeat(shelvesWidth - book.toString().length()) + "|");
+            printMessage("|" + "-".repeat(shelvesWidth) + "|");
         }
-        System.out.println("|" + " ".repeat(shelfWidth) + "|");
+        printMessage("|" + " ".repeat(shelvesWidth) + "|");
     }
 
     private void waitEnterInput() {
@@ -113,15 +114,12 @@ public class BookshelfApp {
             return;
         }
 
-        printAddBookParameter("автора");
-        String author = SCANNER.nextLine();
-        printAddBookParameter("наименование");
-        String title = SCANNER.nextLine();
-        printAddBookParameter("год издания");
+        String author = requestInput("автора");
+        String title = requestInput("наименование");
         Year publishedYear;
         while (true) {
             try {
-                publishedYear = parsePublishedYear(SCANNER.nextLine());
+                publishedYear = parsePublishedYear(requestInput("год издания"));
                 if (publishedYear == null) {
                     printInputError("год издания должен быть между 1800 и текущим\nПопробуйте еще раз: ");
                     continue;
@@ -150,23 +148,24 @@ public class BookshelfApp {
 
     private Year parsePublishedYear(String yearAsString) {
         Year year = Year.of(Integer.parseInt(yearAsString));
-        if ((year.isBefore(Year.now()) || year.equals(Year.now())) && (year.isAfter(Year.of(1799)))) {
+        if ((year.isBefore(Year.now()) ||
+                year.equals(Year.now())) && (year.isAfter(Year.of(MIN_ALLOWED_YEAR)))) {
             return year;
         }
         return null;
     }
 
     private void findBook() {
-        Book book = bookshelf.findBook(askBookTitle());
+        Book book = bookshelf.findBook(requestInput("наименование"));
         if (book == null) {
             printInputError("книга с таким наименованием не найдена на полках шкафа");
             return;
         }
-        printMessage("Выдана книга: " + book.toString() + '\n');
+        printMessage("Выдана книга: " + book + '\n');
     }
 
     private void removeBook() {
-        if (bookshelf.removeBook(askBookTitle())) {
+        if (bookshelf.removeBook(requestInput(""))) {
             printMessage("Книга успешно удалена\n");
             return;
         }
@@ -175,11 +174,11 @@ public class BookshelfApp {
 
     private void clearBookshelf() {
         bookshelf.clear();
-        System.out.println("Шкаф очищен");
+        printMessage("Шкаф очищен");
     }
 
-    private String askBookTitle() {
-        printMessage("Введите название книги: ");
+    private String requestInput(String arg) {
+        System.out.println("Введите " + arg + " книги: ");
         return SCANNER.nextLine();
     }
 
@@ -189,9 +188,5 @@ public class BookshelfApp {
 
     private void printMessage(String message) {
         System.out.print(message);
-    }
-
-    private void printAddBookParameter(String message) {
-        System.out.print("Введите " + message + " книги: ");
     }
 }

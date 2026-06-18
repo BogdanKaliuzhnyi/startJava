@@ -6,7 +6,7 @@ public class Bookshelf {
     private static final int CAPACITY = 10;
     private final Book[] books = new Book[CAPACITY];
     private int booksCount;
-    private int maxShelfWidth;
+    private int shelvesWidth;
 
     public Book[] getAllBooks() {
         return Arrays.copyOf(books, booksCount);
@@ -20,14 +20,14 @@ public class Bookshelf {
         return CAPACITY - booksCount;
     }
 
-    public int getMaxShelvesAmount() {
-        return maxShelfWidth;
+    public int getShelvesWidth() {
+        return shelvesWidth;
     }
 
     public boolean addBook(Book book) {
         if (booksCount < CAPACITY) {
             books[booksCount++] = book;
-            calculateMaxShelfWidth();
+            shelvesWidth = Math.max(shelvesWidth, books[booksCount - 1].toString().length());
             return true;
         }
         return false;
@@ -43,17 +43,20 @@ public class Bookshelf {
         if (bookIndex == -1) {
             return false;
         }
-
+        int removableBookWidth = books[bookIndex].toString().length();
         System.arraycopy(books, bookIndex + 1, books, bookIndex, booksCount - bookIndex - 1);
+        if (removableBookWidth == shelvesWidth) {
+            calculateShelvesWidth();
+        }
+
         books[booksCount - 1] = null;
         booksCount--;
-        calculateMaxShelfWidth();
         return true;
     }
 
     public void clear() {
-        Arrays.fill(books, null);
-        calculateMaxShelfWidth();
+        Arrays.fill(books, 0, booksCount, null);
+        shelvesWidth = 0;
         booksCount = 0;
     }
 
@@ -66,12 +69,10 @@ public class Bookshelf {
         return -1;
     }
 
-    private void calculateMaxShelfWidth() {
-        for (Book book : books) {
-            if (book == null) {
-                return;
-            }
-            maxShelfWidth = Math.max(maxShelfWidth, book.toString().length());
+    private void calculateShelvesWidth() {
+        shelvesWidth = 0;
+        for (int i = 0; i < booksCount; i++) {
+            shelvesWidth = Math.max(shelvesWidth, books[i].toString().length());
         }
     }
 }
