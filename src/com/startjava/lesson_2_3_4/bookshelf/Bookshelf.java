@@ -46,7 +46,7 @@ public class Bookshelf {
         int removableBookWidth = books[bookIndex].toString().length();
         System.arraycopy(books, bookIndex + 1, books, bookIndex, booksCount - bookIndex - 1);
         if (removableBookWidth == shelvesWidth) {
-            calculateShelvesWidth();
+            calculateMaxShelvesWidth();
         }
 
         books[booksCount - 1] = null;
@@ -69,7 +69,7 @@ public class Bookshelf {
         return -1;
     }
 
-    private void calculateShelvesWidth() {
+    private void calculateMaxShelvesWidth() {
         shelvesWidth = 0;
         for (int i = 0; i < booksCount; i++) {
             shelvesWidth = Math.max(shelvesWidth, books[i].toString().length());
