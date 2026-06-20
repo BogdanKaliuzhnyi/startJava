@@ -3,6 +3,7 @@ package com.startjava.lesson_2_3_4.bookshelf;
 import java.time.Year;
 
 public class Book {
+    public static final int MIN_PUBLISHED_YEAR = 1800;
     private final String author;
     private final String title;
     private final Year publishedYear;
@@ -13,20 +14,28 @@ public class Book {
         if (publishedYear == null) {
             throw new IllegalArgumentException("Год издания не может быть null");
         }
+        if (!isPublishedYearInRange(publishedYear)) {
+            throw new IllegalArgumentException("Год издания должен быть между 1800 и текущим");
+        }
         this.publishedYear = publishedYear;
     }
 
-    private String throwIfInvalid(String value, String fieldName) {
+    private static String throwIfInvalid(String value, String fieldName) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(fieldName + " не может быть null или пустым");
         }
         return value;
     }
 
+    public static boolean isPublishedYearInRange(Year year) {
+        return !year.isBefore(Year.of(MIN_PUBLISHED_YEAR)) && !year.isAfter(Year.now());
+    }
+
     public String getTitle() {
         return title;
     }
 
+    @Override
     public String toString() {
         return author + ", " + title + ", " + publishedYear;
     }

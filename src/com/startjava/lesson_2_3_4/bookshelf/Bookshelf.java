@@ -25,12 +25,12 @@ public class Bookshelf {
     }
 
     public boolean addBook(Book book) {
-        if (booksCount < CAPACITY) {
-            books[booksCount++] = book;
-            shelvesWidth = Math.max(shelvesWidth, books[booksCount - 1].toString().length());
-            return true;
+        if (book != null && booksCount == CAPACITY) {
+            return false;
         }
-        return false;
+        books[booksCount++] = book;
+        shelvesWidth = Math.max(shelvesWidth, book.toString().length());
+        return true;
     }
 
     public Book findBook(String title) {
@@ -45,12 +45,11 @@ public class Bookshelf {
         }
         int removableBookWidth = books[bookIndex].toString().length();
         System.arraycopy(books, bookIndex + 1, books, bookIndex, booksCount - bookIndex - 1);
+        books[booksCount - 1] = null;
+        booksCount--;
         if (removableBookWidth == shelvesWidth) {
             calculateMaxShelvesWidth();
         }
-
-        books[booksCount - 1] = null;
-        booksCount--;
         return true;
     }
 
@@ -61,8 +60,12 @@ public class Bookshelf {
     }
 
     private int findBookIndex(String title) {
+        if (title == null || title.isBlank()) {
+            return -1;
+        }
+
         for (int i = 0; i < booksCount; i++) {
-            if (title != null && title.equalsIgnoreCase(books[i].getTitle())) {
+            if (title.equalsIgnoreCase(books[i].getTitle())) {
                 return i;
             }
         }

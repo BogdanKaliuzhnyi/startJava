@@ -1,14 +1,12 @@
 package com.startjava.lesson_2_3_4.bookshelf;
 
 import java.time.Year;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class BookshelfApp {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final int MIN_MENU_ITEM = 1;
     private static final int MAX_MENU_ITEM = 5;
-    private static final int MIN_ALLOWED_YEAR = 1799;
 
     private final Bookshelf bookshelf = new Bookshelf();
 
@@ -44,7 +42,7 @@ public class BookshelfApp {
         for (char c : text.toCharArray()) {
             System.out.print(c);
             try {
-                Thread.sleep(2); // Сюда вернутся
+                Thread.sleep(2);
             } catch (InterruptedException e) {
                 printMessage(e.getMessage());
             }
@@ -95,14 +93,15 @@ public class BookshelfApp {
         Book[] books = bookshelf.getAllBooks();
         int shelvesWidth = bookshelf.getShelvesWidth();
         for (Book book : books) {
-            printMessage("|" + book + " ".repeat(shelvesWidth - book.toString().length()) + "|");
-            printMessage("|" + "-".repeat(shelvesWidth) + "|");
+            String bookDescription = book.toString();
+            printMessage("|" + bookDescription + " ".repeat(shelvesWidth - bookDescription.length()) + "|\n");
+            printMessage("|" + "-".repeat(shelvesWidth) + "|\n");
         }
-        printMessage("|" + " ".repeat(shelvesWidth) + "|");
+        printMessage("|" + " ".repeat(shelvesWidth) + "|\n");
     }
 
     private void waitEnterInput() {
-        printMessage("Для продолжения работы нажмите клавишу <Enter>\n");
+        printMessage("Для продолжения работы нажмите клавишу <Enter>");
         while (!SCANNER.nextLine().isEmpty()) {
             printInputError("необходимо нажать только клавишу <Enter>");
         }
@@ -115,18 +114,18 @@ public class BookshelfApp {
         }
 
         String author = requestInput("автора");
-        String title = requestInput("наименование");
+        String title = requestInput("название");
         Year publishedYear;
         while (true) {
             try {
                 publishedYear = parsePublishedYear(requestInput("год издания"));
                 if (publishedYear == null) {
-                    printInputError("год издания должен быть между 1800 и текущим\nПопробуйте еще раз: ");
+                    printInputError("год издания должен быть между 1800 и текущим");
                     continue;
                 }
                 break;
-            } catch (NumberFormatException | DateTimeParseException e) {
-                printInputError("год издательства должен быть указан в формате YYYY\nПопробуйте еще раз: ");
+            } catch (NumberFormatException e) {
+                printInputError("год издания должен быть указан в формате YYYY\n");
             }
         }
 
@@ -148,37 +147,33 @@ public class BookshelfApp {
 
     private Year parsePublishedYear(String yearAsString) {
         Year year = Year.of(Integer.parseInt(yearAsString));
-        if ((year.isBefore(Year.now()) ||
-                year.equals(Year.now())) && (year.isAfter(Year.of(MIN_ALLOWED_YEAR)))) {
-            return year;
-        }
-        return null;
+        return Book.isPublishedYearInRange(year) ? year : null;
     }
 
     private void findBook() {
-        Book book = bookshelf.findBook(requestInput("наименование"));
+        Book book = bookshelf.findBook(requestInput("название"));
         if (book == null) {
-            printInputError("книга с таким наименованием не найдена на полках шкафа");
+            printInputError("книга с таким названием не найдена на полках шкафа");
             return;
         }
         printMessage("Выдана книга: " + book + '\n');
     }
 
     private void removeBook() {
-        if (bookshelf.removeBook(requestInput(""))) {
+        if (bookshelf.removeBook(requestInput("название"))) {
             printMessage("Книга успешно удалена\n");
             return;
         }
-        printInputError("книга с таким наименованием не найдена на полках шкафа");
+        printInputError("книга с таким названием не найдена на полках шкафа");
     }
 
     private void clearBookshelf() {
         bookshelf.clear();
-        printMessage("Шкаф очищен");
+        printMessage("Шкаф очищен\n");
     }
 
     private String requestInput(String arg) {
-        System.out.println("Введите " + arg + " книги: ");
+        printMessage("Введите " + arg + " книги: ");
         return SCANNER.nextLine();
     }
 
